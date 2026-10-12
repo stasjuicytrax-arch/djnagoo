@@ -1,0 +1,130 @@
+{
+  "_note": "Единый источник контента для сайта. Сайт рендерит ТОЛЬКО отсюда — ничего не хардкодить в компонентах. Поля со значением needsConfirm=true нужно подтвердить у артиста до релиза.",
+
+  "artist": {
+    "name": "DJ NAGOO",
+    "wordmark": "DJNAGOO",
+    "realName": "Ahmed Nagoo",
+    "role": "DJ & Producer",
+    "tagline": "When music can tempt U",
+    "taglineSource": "подпись под логотипом на афишах Klub 360 / The Circle / Elite Crystal",
+    "since": 2005,
+    "base": "Bahrain",
+    "baseNote": "С ноября 2024 — резидент The Foundry, Bahrain (из старого промокита)",
+    "label": "GATE13",
+    "labelNote": "Partner of GATE13; SoundCloud: GATE13",
+    "highlights": [
+      "DJ since 2005",
+      "Best DJ Saint Petersburg, Russia — 2018",
+      "Partner of GATE13",
+      "Music on all digital platforms"
+    ]
+  },
+
+  "bio": {
+    "_source": "Старый PromoKit (1.jpg). Word-документ BIO и пресс-релиз в рабочей папке НЕ найдены — при их появлении заменить/дополнить этот блок.",
+    "needsConfirm": true,
+    "short": "DJ & producer behind the decks since 2005. From freelance sets at Ministry of Sound, Hed Kandi and Buddha Bar to residencies in Egypt, Russia and Bahrain. Best DJ of Saint Petersburg 2018. Partner of GATE13.",
+    "long": null
+  },
+
+  "timeline": [
+    { "from": 2005, "to": 2009, "title": "Freelance", "detail": "Ministry of Sound, Hed Kandi, Buddha Bar and others" },
+    { "from": 2009, "to": 2011, "title": "Resident DJ", "venue": "Buddha Bar", "place": "Egypt" },
+    { "from": 2011, "to": 2016, "title": "Freelance DJ" },
+    { "from": 2016, "to": 2022, "title": "Resident DJ", "venue": "Lomonosov Club", "place": "Russia" },
+    { "from": 2018, "to": 2018, "title": "Best DJ Saint Petersburg", "kind": "award" },
+    { "from": 2022, "to": 2023, "title": "Resident DJ", "venue": "Tommy Lee Club", "place": "Saint Petersburg, Russia" },
+    { "from": 2023, "to": null, "title": "Freelance DJ" },
+    { "from": 2024, "to": null, "title": "Resident DJ", "venue": "The Foundry", "place": "Bahrain", "detail": "since November 2024" }
+  ],
+
+  "genres": [
+    "Downtempo",
+    "Organic House",
+    "House",
+    "Melodic House & Techno",
+    "Commercial",
+    "Hip-Hop",
+    "R&B",
+    "Arabic"
+  ],
+
+  "stats": [
+    { "value": 2005, "label": "behind the decks since", "format": "year" },
+    { "value": 5, "label": "residencies", "suffix": "" },
+    { "value": 16, "label": "gigs in this archive", "suffix": "" },
+    { "value": 5, "label": "cities · 4 countries", "suffix": "" },
+    { "value": 8, "label": "genres in the set", "suffix": "" }
+  ],
+  "_statsNote": "Цифры посчитаны из промокита и афиш. Годы стажа считать динамически: currentYear − 2005. Если у артиста есть сильнее цифры (кол-во стран, стримы, подписчики) — заменить.",
+
+  "tour": {
+    "_note": "ВСЕ 16 афиш из папки Afisha. Порядок — хронологический. date=null → дата на афише не указана, месяц взят из даты файла (needsConfirm).",
+    "items": [
+      { "id": "t01", "date": "2022-11-17", "dow": "Thu", "venue": "The Foundry", "event": null, "city": "Manama", "country": "Bahrain", "poster": "assets/posters/2022-11-17_the-foundry_bahrain.webp" },
+      { "id": "t02", "date": "2022-12-02", "dow": "Fri", "venue": "Klub 360", "event": "Friday", "with": ["DJ Peekaboo"], "city": "Manama", "country": "Bahrain", "poster": "assets/posters/2022-12-02_klub-360_bahrain.webp" },
+      { "id": "t03", "date": "2022-12-31", "dow": "Sat", "venue": "Elite Crystal Hotel", "event": "New Year's Eve", "city": "Juffair", "country": "Bahrain", "poster": "assets/posters/2022-12-31_elite-crystal-nye_bahrain.webp" },
+      { "id": "t04", "date": "2023-01-26", "dow": "Thu", "venue": "H Lounge", "event": "Weekend Party — host & special guest", "city": "Manama", "country": "Bahrain", "poster": "assets/posters/2023-01-26_weekend-party_bahrain.webp", "needsConfirm": true, "confirmWhat": "название площадки (на афише только логотип «H»)" },
+      { "id": "t05", "date": null, "monthHint": "2023-02", "dow": "Sun", "venue": "LNT", "event": "Sunday Mania", "city": "Manama", "country": "Bahrain", "poster": "assets/posters/2023-02_lnt-sunday-mania_bahrain.webp", "needsConfirm": true },
+      { "id": "t06", "date": "2023-02-24", "dow": "Fri", "venue": "Alto Lounge", "event": "Terrace Takeover", "city": "Manama", "country": "Bahrain", "poster": "assets/posters/2023-02-24_alto-terrace-takeover_bahrain.webp" },
+      { "id": "t07", "date": "2023-02-28", "dow": "Tue", "venue": "Social Monkey", "event": "Ladies Night", "with": ["Razz", "Diamond"], "city": "Manama", "country": "Bahrain", "poster": "assets/posters/2023-02-28_social-monkey-ladies-night_bahrain.webp" },
+      { "id": "t08", "date": null, "monthHint": "2023-03", "dow": "Tue", "venue": "Social Monkey", "event": "Ladies Night", "with": ["Razz", "Diamond"], "city": "Manama", "country": "Bahrain", "poster": "assets/posters/2023-03_social-monkey-ladies-night_bahrain.webp", "needsConfirm": true },
+      { "id": "t09", "date": "2023-03-31", "dow": "Fri", "venue": "Tommy Lee", "event": "Special guests: Stereoporno, Gate 13", "with": ["Stereoporno", "Avanty", "Vistan"], "city": "Saint Petersburg", "country": "Russia", "poster": "assets/posters/2023-03-31_tommy-lee_saint-petersburg.webp" },
+      { "id": "t10", "date": "2023-04-08", "dow": "Sat", "venue": "Buddha Room", "event": "GATE13", "city": "Sevastopol", "country": null, "poster": "assets/posters/2023-04-08_buddha-room-gate13_sevastopol.webp", "_countryNote": "страну не указывать — только город, как на афише" },
+      { "id": "t11", "date": "2023-05-24", "dow": "Wed", "venue": "Little Buddha", "event": "Technogen", "with": ["2 Sides", "Goda Brother"], "city": "Hurghada", "country": "Egypt", "poster": "assets/posters/2023-05-24_little-buddha-technogen_hurghada.webp" },
+      { "id": "t12", "date": "2023-06-30", "dow": "Fri", "venue": "The Circle", "event": "Fusion Friday — Eid Edition", "city": "Hurghada", "country": "Egypt", "poster": "assets/posters/2023-06-30_the-circle-eid_hurghada.webp" },
+      { "id": "t13", "date": "2023-07-30", "dow": "Sun", "venue": "Swiss Inn Resort", "event": "Lost Land Sunday", "city": "Hurghada", "country": "Egypt", "poster": "assets/posters/2023-07-30_swiss-inn-lost-land_hurghada.webp" },
+      { "id": "t14", "date": null, "monthHint": "2023-09", "dow": "Fri", "venue": "The Circle", "event": "The Art of Melodic", "with": ["Elzwidey", "Melosopher"], "city": "Hurghada", "country": "Egypt", "poster": "assets/posters/2023-09_the-circle-art-of-melodic_hurghada.webp", "needsConfirm": true },
+      { "id": "t15", "date": "2023-10-27", "dow": "Fri", "venue": "W Muscat — Wet Deck", "event": "Sound Waves", "city": "Muscat", "country": "Oman", "poster": "assets/posters/2023-10-27_w-muscat-sound-waves_oman.webp" },
+      { "id": "t16", "date": "2023-11-09", "dow": "Thu", "venue": "Siddharta Lounge by Buddha-Bar, W Muscat", "event": "Soirée After Party", "city": "Muscat", "country": "Oman", "poster": "assets/posters/2023-11-09_siddharta-w-muscat_oman.webp" }
+    ]
+  },
+
+  "venues": [
+    "Ministry of Sound", "Hed Kandi", "Buddha Bar", "Lomonosov Club", "Tommy Lee", "The Foundry",
+    "Klub 360", "Alto Lounge", "Social Monkey", "Little Buddha", "The Circle", "Swiss Inn",
+    "W Muscat", "Siddharta Lounge", "Elite Crystal", "Buddha Room"
+  ],
+
+  "videos": [
+    { "id": "v01", "src": "assets/video/video-01.mp4", "poster": "assets/video/video-01-poster.jpg", "duration": 26.1, "w": 720, "h": 1280, "audio": true, "content": "Студийный/сценический сет: крупный план за пультом → широкий план, красный LED-экран", "role": "hero-loop кандидат / главный ролик Video-блока" },
+    { "id": "v02", "src": "assets/video/video-02.mp4", "poster": "assets/video/video-02-poster.jpg", "duration": 15.3, "w": 360, "h": 640, "audio": true, "content": "Толпа с руками, розово-закатные визуалы, артист за пультом", "role": "crowd / energy", "warning": "Низкое разрешение 360×640 — показывать только в малом формате или под зерном/дуотоном, не на весь экран" },
+    { "id": "v03", "src": "assets/video/video-03.mp4", "poster": "assets/video/video-03-poster.jpg", "duration": 18.0, "w": 720, "h": 1280, "audio": true, "content": "Чёрно-белый силуэт артиста на фоне светового экрана, зал", "role": "atmosphere / outro" }
+  ],
+
+  "press": [
+    { "src": "assets/press/press-01-studio-white.webp", "note": "Студия, белый фон, рубашка с мазками — смеётся" },
+    { "src": "assets/press/press-02-studio-white-laugh.webp", "note": "Студия, белый фон, смеётся (кадр из старого промокита)" },
+    { "src": "assets/press/press-03-throne.webp", "note": "Кожаный трон, бандана, белый свитшот" },
+    { "src": "assets/press/press-04-live-freaks-of-nature.webp", "note": "Live, наушники, синий свет — Freaks of Nature 2023" },
+    { "src": "assets/press/press-05-booth-leather.webp", "note": "За пультом, кожаная куртка, оранжевый неон" },
+    { "src": "assets/press/press-06-pinwheels.webp", "note": "Скрещённые руки, серебряные вертушки" }
+  ],
+
+  "hero": {
+    "main": "assets/hero/hero-main.webp",
+    "alt": "assets/hero/hero-alt.webp",
+    "vertical": "assets/hero/hero-vertical.webp",
+    "cutout": null,
+    "_cutoutTodo": "Сделать PNG/WebP с альфой (артист без фона) из Hero 2.jpg — нужен для слоя «вордмарк ЗА головой»."
+  },
+
+  "logo": {
+    "black": "assets/logo/logo-black.png",
+    "white": "assets/logo/logo-white.png",
+    "_todo": "Отрисовать SVG-версию логотипа (PNG 1115×149 мелковат для 4K-вордмарка и халфтон-футера)."
+  },
+
+  "contacts": {
+    "phone": "+973 3307 4445",
+    "phoneHref": "tel:+97333074445",
+    "whatsapp": "https://wa.me/97333074445",
+    "email": "djnagoo@gmail.com",
+    "instagram": { "handle": "@g13nagoo", "url": "https://instagram.com/g13nagoo" },
+    "facebook": { "handle": "Ahmed Nagoo", "url": null },
+    "soundcloud": { "handle": "GATE13", "url": null },
+    "needsConfirm": true,
+    "_confirmWhat": "актуальность телефона и почты, точные URL Facebook и SoundCloud, нужен ли WhatsApp, есть ли букинг-агент"
+  }
+}
