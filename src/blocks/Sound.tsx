@@ -301,6 +301,7 @@ export default function Sound() {
 
           {/* дубль списком: доступность и mobile */}
           <ul
+            data-avoid-cta
             className="mt-[var(--space-block)] flex list-none flex-wrap gap-2 p-0 pb-24 md:sr-only md:pb-0"
             aria-label={ui.genresLabel}
           >

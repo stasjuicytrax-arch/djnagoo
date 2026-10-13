@@ -51,7 +51,7 @@ export default function Stats() {
     // размер цифры: высота капители ≈ 50svh, но не шире экрана (цифра на всю ширину на mobile)
     const sizeFor = (digits: number) => {
       const w = window.innerWidth - 32
-      const byHeight = window.innerHeight * 0.69
+      const byHeight = window.innerHeight * 0.78
       const byWidth = w / (digits * 0.4)
       return Math.min(byHeight, byWidth)
     }
@@ -184,16 +184,16 @@ export default function Stats() {
                 items.current[i] = el
               }}
               aria-hidden
-              className="absolute inset-0 flex origin-left items-center px-[16px] md:px-[var(--gutter-x)]"
+              className="absolute inset-0 flex origin-left items-center px-[16px] md:pl-[calc(var(--gutter-x)+12vw)] md:pr-[var(--gutter-x)]"
               style={{ opacity: 0, visibility: 'hidden' }}
             >
-              <div className="flex flex-col md:flex-row md:items-end md:gap-8">
+              <div className="flex flex-col md:flex-row md:items-end md:gap-6">
                 <span className="stat-num flex leading-[1em]">
                   {digits.map((d, k) => (
                     <Drum key={k} digit={d} />
                   ))}
                 </span>
-                <span className="t-micro mt-4 text-[11px] md:mb-[calc(var(--n)*0.17)] md:mt-0" style={{ fontSize: 'var(--t-micro)' }}>
+                <span className="t-micro mt-2 text-[11px] md:mb-[calc(var(--n)*0.14)] md:mt-0" style={{ fontSize: 'var(--t-micro)' }}>
                   {s.label}
                 </span>
               </div>

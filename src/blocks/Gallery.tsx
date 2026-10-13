@@ -191,7 +191,7 @@ export default function Gallery() {
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 z-[5]"
-          style={{ background: 'linear-gradient(90deg, rgba(11,9,8,.62), rgba(11,9,8,0) 30%, rgba(11,9,8,0) 70%, rgba(11,9,8,.62))' }}
+          style={{ background: 'linear-gradient(90deg, rgba(11,9,8,.48), rgba(11,9,8,0) 28%, rgba(11,9,8,0) 72%, rgba(11,9,8,.48))' }}
         />
 
         {/* заголовок поверх, по центру; ink-подложка держит читаемость над кадрами */}
@@ -203,7 +203,7 @@ export default function Gallery() {
           />
           <div className="relative text-center">
             <SectionTitle lines={ui.titles.gallery} className="text-center" />
-            <p className="t-micro mt-[var(--space-tight)] text-bone">
+            <p className="t-micro mt-[var(--space-tight)] inline-block rounded-full bg-ink/75 px-3 py-1.5 text-bone">
               {press.length} {G.photos} · {tour.items.length} {G.posters} · {videos.length} {G.clips}
             </p>
           </div>
@@ -215,7 +215,7 @@ export default function Gallery() {
           type="button"
           onClick={() => setPaused((p) => !p)}
           aria-pressed={paused}
-          className="t-micro link-draw absolute bottom-6 left-1/2 z-20 -translate-x-1/2 inline-flex min-h-11 items-center text-bone-dim hover:text-bone"
+          className="t-micro link-draw absolute left-[var(--gutter-x)] top-24 z-20 inline-flex min-h-11 items-center text-bone-dim hover:text-bone"
         >
           {paused ? ui.motion.play : ui.motion.pause}
         </button>

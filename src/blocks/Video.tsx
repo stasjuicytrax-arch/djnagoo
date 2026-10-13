@@ -291,7 +291,7 @@ export default function Video() {
       id="video"
       ref={root}
       className="relative overflow-hidden bg-ink text-bone"
-      style={{ paddingBlock: 'var(--space-section) clamp(80px, 10vw, 160px)' }}
+      style={{ paddingBlock: 'clamp(96px, 11vw, 168px) clamp(80px, 10vw, 160px)' }}
     >
       <div className="px-[var(--gutter-x)]">
         <SectionTitle lines={ui.titles.video} className="text-center" />

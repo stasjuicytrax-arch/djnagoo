@@ -132,7 +132,15 @@ export default function Booking() {
             'linear-gradient(to bottom, transparent 0, #000 min(38vh, 380px), #000 calc(100% - 24vh), transparent 100%)',
         }}
       >
-        <div ref={glow} className="absolute inset-0" style={{ backgroundImage: 'var(--grad-glow)', opacity: 0 }} />
+        <div
+          ref={glow}
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              'radial-gradient(75% 55% at 50% 100%, rgba(246,101,38,.5), transparent 72%), var(--grad-glow)',
+            opacity: 0,
+          }}
+        />
         <HazeCanvas gain={gain} />
       </div>
 
@@ -191,6 +199,14 @@ export default function Booking() {
           {ig && ig.url && (
             <li className="flex items-center justify-between gap-4 border-t border-bone/25 px-3 py-4 md:px-4">
               <SocialRow href={ig.url} name="Instagram" handle={ig.handle} />
+              <a
+                href={ig.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="glass-pill t-micro grid min-h-11 place-items-center rounded-full px-4"
+              >
+                {B.open}
+              </a>
             </li>
           )}
         </ul>
@@ -210,10 +226,10 @@ export default function Booking() {
       {/* футер: одна тонкая строка, дымка уходит в ink к самому низу */}
       <footer
         data-avoid-cta
-        className="t-micro relative flex items-center justify-between gap-4 px-[var(--gutter-x)] pb-[72px] pr-[calc(var(--gutter-x)+96px)] pt-4"
+        className="t-micro relative flex items-center justify-between gap-4 whitespace-nowrap px-[var(--gutter-x)] pb-[72px] pt-4"
       >
         <p className="m-0 text-bone-dim">
-          © {new Date().getFullYear()} {artist.name} · {B.pressKit}
+          © {new Date().getFullYear()} {artist.name}<span className="max-sm:hidden"> · {B.pressKit}</span>
         </p>
         <button
           type="button"

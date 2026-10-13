@@ -61,7 +61,7 @@
     "timeline": { "now": "Now", "award": "Award" },
     "motion": { "pause": "Pause motion", "play": "Play motion" },
     "genresLabel": "Genres",
-    "booking": { "write": "Write", "copy": "Copy", "copied": "Copied", "copyFailed": "Copy failed", "call": "Call", "whatsapp": "WhatsApp", "email": "Email", "social": "Social", "download": "Download press kit (PDF)", "back": "Back to top", "pressKit": "Press kit", "contact": "Contact for booking" },
+    "booking": { "write": "Write", "copy": "Copy", "copied": "Copied", "copyFailed": "Copy failed", "open": "Open", "call": "Call", "whatsapp": "WhatsApp", "email": "Email", "social": "Social", "download": "Download press kit (PDF)", "back": "Back to top", "pressKit": "Press kit", "contact": "Contact for booking" },
     "gallery": { "press": "Press photo", "poster": "Poster", "clip": "Clip", "photos": "photos", "posters": "posters", "clips": "clips", "open": "Open image" },
     "tour": {
       "nights": "nights",
