@@ -3,8 +3,7 @@ import { content, assetUrl } from '@/lib/content'
 import { reducedMotion } from '@/lib/smooth'
 import SectionTitle from '@/components/SectionTitle'
 
-const { genres, ui, press } = content
-const photo = press.find((p) => p.src.includes('press-04'))!
+const { genres, ui, hero } = content
 
 /**
  * Три орбиты, периоды 30/40/50s (полиритм 3:4:5), разные направления.
@@ -281,7 +280,7 @@ export default function Sound() {
                   </svg>
                   <span className="absolute left-1/2 top-1/2 size-[44%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full">
                     <img
-                      src={assetUrl(photo.src)}
+                      src={assetUrl(hero.vinylLabel)}
                       alt=""
                       draggable={false}
                       decoding="async"

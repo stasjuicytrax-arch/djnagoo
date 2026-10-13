@@ -184,6 +184,7 @@
 
   "hero": {
     "main": "assets/hero/hero-main.webp",
+    "vinylLabel": "assets/hero/vinyl-label.webp",
     "plate": "assets/hero/hero-plate.webp",
     "_plateNote": "Фон hero без артиста (артист вырезан и закрашен градиентом): позволяет масштабировать и двигать cutout независимо от фона.",
     "alt": "assets/hero/hero-alt.webp",
