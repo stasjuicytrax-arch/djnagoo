@@ -56,7 +56,7 @@
     "skip": "Skip",
     "floatingCta": "Book Nagoo",
     "scroll": "Scroll",
-    "cursor": { "play": "Sound on", "view": "View", "drag": "Drag" },
+    "cursor": { "play": "Sound on", "view": "View", "drag": "Drag", "scratch": "Scratch" },
     "copied": "Copied",
     "timeline": { "now": "Now", "award": "Award" },
     "motion": { "pause": "Pause motion", "play": "Play motion" },

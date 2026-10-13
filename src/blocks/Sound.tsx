@@ -26,7 +26,15 @@ function useOrbits(): Orbit[] {
       const names = sorted.slice(k, k + o.take)
       k += o.take
       const offset = oi * 37 // разводим стартовые углы колец
-      return { ...o, items: names.map((name, i) => ({ name, angle: offset + (360 / names.length) * i })) }
+      const w = names.map((n) => n.length + 7) // вес дуги: текст + поля пилюли
+      const total = w.reduce((a, b) => a + b, 0)
+      let acc = 0
+      const items = names.map((name, i) => {
+        const angle = offset + ((acc + w[i] / 2) / total) * 360
+        acc += w[i]
+        return { name, angle }
+      })
+      return { ...o, items }
     })
   }, [])
 }
@@ -41,6 +49,7 @@ export default function Sound() {
   const orbits = useOrbits()
   const scene = useRef<HTMLDivElement>(null)
   const [paused, setPaused] = useState(false)
+  const disc = useRef<HTMLDivElement>(null)
   const pausedRef = useRef(false)
   pausedRef.current = paused
   const api = useRef<{ setPaused: (p: boolean) => void } | null>(null)
@@ -113,6 +122,84 @@ export default function Sound() {
     api.current?.setPaused(paused)
   }, [paused])
 
+  // Пластинка: ровное вращение 8 с на оборот; хват мышью/пальцем крутит вперёд-назад,
+  // после отпускания инерция плавно возвращает базовую скорость. PAUSE MOTION останавливает и диск.
+  useEffect(() => {
+    const el = disc.current
+    if (!el) return
+    const BASE = 360 / 8 // градусов в секунду
+    let angle = 0
+    let vel = reducedMotion() ? 0 : BASE
+    let dragging = false
+    let lastA = 0
+    let lastT = 0
+    let raf = 0
+    let visible = true
+    let prev = performance.now()
+
+    const pointerAngle = (e: PointerEvent) => {
+      const r = el.getBoundingClientRect()
+      return (Math.atan2(e.clientY - (r.top + r.height / 2), e.clientX - (r.left + r.width / 2)) * 180) / Math.PI
+    }
+    const down = (e: PointerEvent) => {
+      dragging = true
+      el.setPointerCapture(e.pointerId)
+      lastA = pointerAngle(e)
+      lastT = performance.now()
+      vel = 0
+    }
+    const move = (e: PointerEvent) => {
+      if (!dragging) return
+      const a = pointerAngle(e)
+      let d = a - lastA
+      if (d > 180) d -= 360
+      if (d < -180) d += 360
+      const now = performance.now()
+      const dt = Math.max(1, now - lastT) / 1000
+      angle += d
+      vel = Math.max(-1440, Math.min(1440, d / dt))
+      lastA = a
+      lastT = now
+    }
+    const up = (e: PointerEvent) => {
+      if (!dragging) return
+      dragging = false
+      if (el.hasPointerCapture(e.pointerId)) el.releasePointerCapture(e.pointerId)
+      // если указатель стоял перед отпусканием — скорость гаснет
+      if (performance.now() - lastT > 90) vel = 0
+    }
+    el.addEventListener('pointerdown', down)
+    el.addEventListener('pointermove', move)
+    el.addEventListener('pointerup', up)
+    el.addEventListener('pointercancel', up)
+
+    const io = new IntersectionObserver(([e]) => (visible = e.isIntersecting))
+    io.observe(el)
+
+    const frame = (now: number) => {
+      raf = requestAnimationFrame(frame)
+      const dt = Math.min(0.05, (now - prev) / 1000)
+      prev = now
+      if (!visible) return
+      if (!dragging) {
+        const target = pausedRef.current || reducedMotion() ? 0 : BASE
+        // инерция: экспоненциальный возврат к базовой скорости
+        vel += (target - vel) * (1 - Math.exp(-dt / 0.35))
+        angle += vel * dt
+      }
+      el.style.transform = 'rotate(' + angle.toFixed(2) + 'deg)'
+    }
+    raf = requestAnimationFrame(frame)
+    return () => {
+      cancelAnimationFrame(raf)
+      io.disconnect()
+      el.removeEventListener('pointerdown', down)
+      el.removeEventListener('pointermove', move)
+      el.removeEventListener('pointerup', up)
+      el.removeEventListener('pointercancel', up)
+    }
+  }, [])
+
   return (
     <section
       id="sound"
@@ -165,8 +252,8 @@ export default function Sound() {
                       }}
                     >
                       {/* WAAPI владеет transform у data-counter; центрирование ниже идёт через свойство translate */}
-                      <span data-counter className="block">
-                        <span className="genre-pill t-micro block -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border border-bone-faint bg-ink px-3 py-1.5 text-bone">
+                      <span data-counter className="absolute left-0 top-0 block size-0">
+                        <span className="genre-pill t-micro absolute left-0 top-0 block -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border border-bone-faint bg-ink px-3 py-1.5 text-bone">
                           {it.name}
                         </span>
                       </span>
@@ -175,17 +262,39 @@ export default function Sound() {
                 </div>
               ))}
 
-              {/* центр: артист в дуотоне ink → ember */}
+              {/* центр: виниловая пластинка с фото на этикетке, скретч мышью или пальцем */}
               <div
-                className="absolute left-1/2 top-1/2 overflow-hidden rounded-full bg-ember"
-                style={{ width: '30cqw', height: '30cqw', transform: 'translate(-50%, -50%)' }}
+                className="absolute left-1/2 top-1/2"
+                style={{ width: '32cqw', height: '32cqw', transform: 'translate(-50%, -50%)' }}
               >
-                <img
-                  src={assetUrl(photo.src)}
-                  alt=""
-                  decoding="async"
-                  className="size-full object-cover grayscale contrast-125 mix-blend-multiply"
-                />
+                <div
+                  ref={disc}
+                  data-cursor="scratch"
+                  role="img"
+                  aria-label={ui.cursor.scratch}
+                  className="vinyl absolute inset-0 touch-none select-none rounded-full"
+                >
+                  <svg aria-hidden viewBox="0 0 100 100" className="absolute inset-0 size-full">
+                    {Array.from({ length: 26 }, (_, i) => (
+                      <circle key={i} cx="50" cy="50" r={26 + i * 0.85} fill="none" stroke="var(--bone)" strokeOpacity={0.07 + (i % 5 === 0 ? 0.05 : 0)} strokeWidth="0.22" />
+                    ))}
+                  </svg>
+                  <span className="absolute left-1/2 top-1/2 size-[44%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full">
+                    <img
+                      src={assetUrl(photo.src)}
+                      alt=""
+                      draggable={false}
+                      decoding="async"
+                      className="size-full object-cover"
+                    />
+                  </span>
+                  <span
+                    aria-hidden
+                    className="absolute left-1/2 top-1/2 size-[4.5%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-ink ring-2 ring-bone/60"
+                  />
+                </div>
+                {/* блик не вращается вместе с диском */}
+                <span aria-hidden className="vinyl-glare pointer-events-none absolute inset-0 rounded-full" />
               </div>
             </div>
           </div>
