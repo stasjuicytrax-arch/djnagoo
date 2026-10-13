@@ -10,6 +10,10 @@ import Preloader from '@/components/Preloader'
 import Hero from '@/blocks/Hero'
 import Manifest from '@/blocks/Manifest'
 import Stats from '@/blocks/Stats'
+import Sound from '@/blocks/Sound'
+import Video from '@/blocks/Video'
+import Timeline from '@/blocks/Timeline'
+import Tour from '@/blocks/Tour'
 
 export default function App() {
   useSmoothScroll()
@@ -31,8 +35,12 @@ export default function App() {
         <Hero />
         <Manifest />
         <Stats />
-        {/* Временные заглушки: заменяются блоками 04–09 по порядку TZ §4 */}
-        {content.ui.sections.slice(3).map((id) => (
+        <Sound />
+        <Video />
+        <Timeline />
+        <Tour />
+        {/* Временные заглушки: заменяются блоками 08–09 по порядку TZ §4 */}
+        {content.ui.sections.slice(7).map((id) => (
           <section
             key={id}
             id={id}

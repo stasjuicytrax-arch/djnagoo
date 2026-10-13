@@ -38,18 +38,45 @@
     ],
     "sections": ["hero", "manifest", "stats", "sound", "video", "timeline", "tour", "gallery", "booking"],
     "live": "Live from",
+    "titles": {
+      "sound": ["The sound"],
+      "video": ["Live"],
+      "timeline": ["The path"],
+      "tour": ["On the road"],
+      "gallery": ["On & off", "stage"],
+      "booking": ["Book", "Nagoo"]
+    },
+    "genresCaption": "genres in the set",
     "loading": "Loading",
     "skip": "Skip",
     "floatingCta": "Book Nagoo",
     "scroll": "Scroll",
     "cursor": { "play": "Sound on", "view": "View", "drag": "Drag" },
-    "copied": "Copied"
+    "copied": "Copied",
+    "timeline": { "now": "Now", "award": "Award" },
+    "motion": { "pause": "Pause motion", "play": "Play motion" },
+    "genresLabel": "Genres",
+    "tour": {
+      "nights": "nights",
+      "night": "night",
+      "cities": "cities",
+      "viewList": "List",
+      "viewCities": "Cities",
+      "views": "Tour view",
+      "dates": "dates",
+      "with": "w/",
+      "openFolder": "Open folder",
+      "closeFolder": "Close folder",
+      "showPoster": "Show poster"
+    },
+    "lightbox": { "close": "Close", "prev": "Previous", "next": "Next", "of": "of" },
+    "video": { "pause": "Pause video", "play": "Play video", "soundOn": "Sound on", "soundOff": "Sound off", "open": "Open video", "close": "Close video", "tapForSound": "Tap for sound" }
   },
 
   "manifest": {
     "_note": "Заголовок Manifest (TZ §4, секция 02). Точка в конце добавляется компонентом.",
     "headline": ["Behind the decks", "for twenty", "years"],
-    "photoAlt": "DJ Nagoo laughing, black and white studio portrait"
+    "photoAlt": "DJ Nagoo in a bandana and white sweatshirt on a leather chair, black and white portrait"
   },
 
   "bio": {
@@ -92,6 +119,7 @@
 
   "tour": {
     "_note": "ВСЕ 16 афиш из папки Afisha. Порядок — хронологический. date=null → дата на афише не указана, месяц взят из даты файла (needsConfirm).",
+    "cityGroups": { "Juffair": "Manama" },
     "items": [
       { "id": "t01", "date": "2022-11-17", "dow": "Thu", "venue": "The Foundry", "event": null, "city": "Manama", "country": "Bahrain", "poster": "assets/posters/2022-11-17_the-foundry_bahrain.webp" },
       { "id": "t02", "date": "2022-12-02", "dow": "Fri", "venue": "Klub 360", "event": "Friday", "with": ["DJ Peekaboo"], "city": "Manama", "country": "Bahrain", "poster": "assets/posters/2022-12-02_klub-360_bahrain.webp" },
@@ -119,9 +147,9 @@
   ],
 
   "videos": [
-    { "id": "v01", "src": "assets/video/video-01.mp4", "poster": "assets/video/video-01-poster.jpg", "duration": 26.1, "w": 720, "h": 1280, "audio": true, "content": "Студийный/сценический сет: крупный план за пультом → широкий план, красный LED-экран", "role": "hero-loop кандидат / главный ролик Video-блока" },
-    { "id": "v02", "src": "assets/video/video-02.mp4", "poster": "assets/video/video-02-poster.jpg", "duration": 15.3, "w": 360, "h": 640, "audio": true, "content": "Толпа с руками, розово-закатные визуалы, артист за пультом", "role": "crowd / energy", "warning": "Низкое разрешение 360×640 — показывать только в малом формате или под зерном/дуотоном, не на весь экран" },
-    { "id": "v03", "src": "assets/video/video-03.mp4", "poster": "assets/video/video-03-poster.jpg", "duration": 18.0, "w": 720, "h": 1280, "audio": true, "content": "Чёрно-белый силуэт артиста на фоне светового экрана, зал", "role": "atmosphere / outro" }
+    { "id": "v01", "caption": "Live set: close-up at the decks, then a wide shot of the red LED wall", "src": "assets/video/video-01.mp4", "poster": "assets/video/video-01-poster.jpg", "duration": 26.1, "w": 720, "h": 404, "audio": true, "content": "Студийный/сценический сет: крупный план за пультом → широкий план, красный LED-экран", "role": "hero-loop кандидат / главный ролик Video-блока" },
+    { "id": "v02", "caption": "Crowd with raised hands under pink sunset visuals, the DJ at the decks", "src": "assets/video/video-02.mp4", "poster": "assets/video/video-02-poster.jpg", "duration": 15.3, "w": 360, "h": 368, "audio": true, "content": "Толпа с руками, розово-закатные визуалы, артист за пультом", "role": "crowd / energy", "warning": "Низкое разрешение 360×640 — показывать только в малом формате или под зерном/дуотоном, не на весь экран" },
+    { "id": "v03", "caption": "Black and white silhouette of the DJ against a light screen", "src": "assets/video/video-03.mp4", "poster": "assets/video/video-03-poster.jpg", "duration": 18.0, "w": 704, "h": 404, "audio": true, "content": "Чёрно-белый силуэт артиста на фоне светового экрана, зал", "role": "atmosphere / outro" }
   ],
 
   "press": [
