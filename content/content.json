@@ -66,6 +66,8 @@
     "tour": {
       "nights": "nights",
       "night": "night",
+      "playedIn": "Played in",
+      "countries": "countries",
       "cities": "cities",
       "viewList": "List",
       "viewCities": "Cities",
@@ -100,10 +102,22 @@
     { "from": 2016, "to": 2022, "title": "Resident DJ", "venue": "Lomonosov Club", "place": "Russia" },
     { "from": 2018, "to": 2018, "title": "Best DJ Saint Petersburg", "kind": "award" },
     { "from": 2022, "to": 2023, "title": "Resident DJ", "venue": "Tommy Lee Club", "place": "Saint Petersburg, Russia" },
-    { "from": 2023, "to": null, "title": "Freelance DJ" },
-    { "from": 2024, "to": 2025, "title": "Resident DJ", "venue": "The Foundry", "place": "Bahrain", "detail": "since November 2024" },
-    { "from": 2025, "to": null, "title": "Resident DJ", "venue": "Haus", "place": "Bahrain", "needsConfirm": true, "confirmWhat": "роль в Haus (пока Resident DJ)" }
+    { "from": 2023, "to": 2024, "title": "Freelance DJ" },
+    { "from": 2024, "to": 2025, "rangeLabel": "Nov 2024", "title": "Resident DJ", "venue": "The Foundry", "place": "Bahrain" },
+    { "from": 2025, "to": null, "title": "Resident DJ", "venue": "Haus Lounge", "place": "Bahrain", "detail": "+ guest sets", "needsConfirm": true, "confirmWhat": "не только Haus Lounge: уточняем у клиента, где ещё играет" }
   ],
+
+  "playedIn": {
+    "_note": "География выступлений (отдельно от tour с афишами). Страны считаем по countries, города по cities всех стран плюс cityOnly (города без страны на афише).",
+    "countries": [
+      { "country": "Bahrain", "cities": ["Manama"] },
+      { "country": "Egypt", "cities": ["Hurghada", "Cairo", "North Coast"] },
+      { "country": "Saudi Arabia", "cities": ["Riyadh"] },
+      { "country": "Oman", "cities": ["Muscat"] },
+      { "country": "Russia", "cities": ["Saint Petersburg", "Moscow", "Kazan"] }
+    ],
+    "cityOnly": ["Sevastopol"]
+  },
 
   "genres": [
     "Downtempo",
@@ -119,10 +133,10 @@
   "stats": [
     { "value": 2005, "label": "years", "format": "yearsSince" },
     { "value": 4, "label": "residencies" },
-    { "value": 16, "label": "nights" },
-    { "value": 4, "label": "countries" }
+    { "label": "countries", "format": "playedCountries" },
+    { "label": "cities", "format": "playedCities" }
   ],
-  "_statsNote": "Годы стажа считать динамически: currentYear − 2005. Резидентства: Lomonosov Club, Tommy Lee Club, The Foundry, Haus (4). Страны тура: Bahrain, Egypt, Russia, Oman (4). Жанры в Stats не показываем (они в Sound).",
+  "_statsNote": "Годы стажа: currentYear − 2005. Резидентства: Lomonosov Club, Tommy Lee Club, The Foundry, Haus Lounge (4). Страны и города считаются из playedIn (5 стран, 10 городов, Sevastopol только в города).",
 
   "tour": {
     "_note": "ВСЕ 16 афиш из папки Afisha. Порядок — хронологический. date=null → дата на афише не указана, месяц взят из даты файла (needsConfirm).",
@@ -194,7 +208,7 @@
     "phoneHref": "tel:+97333074445",
     "whatsapp": "https://wa.me/97333074445",
     "email": "djnagoo@gmail.com",
-    "instagram": { "handle": "@g13nagoo", "url": "https://instagram.com/g13nagoo" },
+    "instagram": { "handle": "@dj.nagoo", "url": "https://instagram.com/dj.nagoo" },
     "facebook": { "handle": "Ahmed Nagoo", "url": null },
     "soundcloud": { "handle": "GATE13", "url": null },
     "needsConfirm": true,

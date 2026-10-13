@@ -55,7 +55,16 @@
 |---|---|---|
 | 2009–2011 | Resident DJ, Buddha Bar, Egypt | Freelance DJ & Marketing Manager, Buddha Bar |
 | 2024–2025 | The Foundry (резидент с ноября 2024) | The Foundry, Bahrain, `to: 2025` |
-| 2025 — NOW | нет | Haus, Bahrain, Resident DJ (`needsConfirm`: роль уточняется) |
-| Резидентства | 5 | **4**: Lomonosov Club, Tommy Lee Club, The Foundry, Haus |
+| 2025 — NOW | нет | Haus Lounge, Bahrain, Resident DJ (`needsConfirm`: роль уточняется) |
+| Резидентства | 5 | **4**: Lomonosov Club, Tommy Lee Club, The Foundry, Haus Lounge |
 | bio.short | residencies in Egypt, Russia and Bahrain | residencies in Russia and Bahrain |
 | Hurghada | гиги в туре | остаются (это гиги, не резидентство) |
+
+## Раунд 2 (клиент): Instagram, таймлайн, география
+
+| Что | Значение |
+|---|---|
+| Instagram | @dj.nagoo, https://instagram.com/dj.nagoo (прежний аккаунт нигде не встречается) |
+| Таймлайн | 2005–2009 Freelance · 2009–2011 Freelance DJ & Marketing Manager (Buddha Bar) · 2011–2016 Freelance DJ · 2016–2022 Resident DJ (Lomonosov Club, Russia) · 2018 Best DJ Saint Petersburg · 2022–2023 Resident DJ (Tommy Lee, Saint Petersburg) · 2023–2024 Freelance DJ · Nov 2024 Resident DJ (The Foundry, Bahrain) · 2025 — NOW Resident DJ (Haus Lounge, Bahrain + guest sets, `needsConfirm`) |
+| Played in | 5 стран (Bahrain, Egypt, Saudi Arabia, Oman, Russia), 10 городов (Manama, Hurghada, Cairo, North Coast, Riyadh, Muscat, Saint Petersburg, Moscow, Kazan, Sevastopol) |
+| Stats | 21 years · 4 residencies · 5 countries · 10 cities (из playedIn) |

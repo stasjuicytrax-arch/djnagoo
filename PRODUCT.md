@@ -57,7 +57,7 @@ web
 - 6 пресс-фото: `assets/press/`. Hero: `assets/hero/`. Логотипы PNG: `assets/logo/`.
 - Награда: Best DJ Saint Petersburg, Russia — 2018.
 - Отсутствуют (не выдумывать): Word-BIO, пресс-релиз, свежие даты, ссылки на стриминги, райдер.
-- Контакты (`contacts.needsConfirm: true`): телефон, WhatsApp, email, Instagram @g13nagoo.
+- Контакты (`contacts.needsConfirm: true`): телефон, WhatsApp, email, Instagram @dj.nagoo.
 
 ## Product Principles
 

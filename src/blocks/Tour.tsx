@@ -4,6 +4,7 @@ import { getLenis, reducedMotion } from '@/lib/smooth'
 import SectionTitle from '@/components/SectionTitle'
 import ImageLightbox, { type LightboxItem } from '@/components/ImageLightbox'
 import { fmtDate, groupOf } from '@/lib/format'
+import { COUNTRY_COUNT, CITY_COUNT } from '@/lib/stats'
 
 const { tour, venues, ui } = content
 const T = ui.tour
@@ -36,6 +37,42 @@ const YEARS = (() => {
   const ys = tour.items.map((i) => Number((i.date ?? (i as { monthHint?: string }).monthHint ?? '').slice(0, 4))).filter(Boolean)
   return [Math.min(...ys), Math.max(...ys)]
 })()
+
+/* ───────── PLAYED IN: города, где играл (отдельно от афиш) ───────── */
+const { playedIn } = content
+
+function PlayedIn() {
+  const groups: { country: string | null; cities: string[] }[] = [
+    ...playedIn.countries,
+    ...(playedIn.cityOnly.length ? [{ country: null, cities: playedIn.cityOnly }] : []),
+  ]
+  return (
+    <div className="px-[var(--gutter-x)]" data-avoid-cta>
+      <p className="t-micro m-0 mb-[var(--space-tight)] tabular-nums text-bone-dim">
+        {T.playedIn} · {COUNTRY_COUNT} {T.countries} · {CITY_COUNT} {T.cities}
+      </p>
+      <ul className="m-0 flex list-none flex-wrap gap-x-[clamp(32px,5vw,88px)] gap-y-[clamp(24px,3vw,40px)] border-t border-[var(--line)] p-0 pt-[var(--space-tight)]">
+        {groups.map((g) => (
+          <li key={g.country ?? 'only'} className="min-w-0">
+            <p className="t-micro m-0 mb-2 min-h-[1.4em] text-bone-dim">{g.country ?? ''}</p>
+            <ul className="m-0 flex list-none flex-wrap items-center gap-x-4 gap-y-1 p-0">
+              {g.cities.map((c, i) => (
+                <li key={c} className="flex items-center gap-4">
+                  <span className="t-cond leading-[1]" style={{ fontSize: 'clamp(28px, 3.6vw, 64px)' }}>
+                    {c}
+                  </span>
+                  {i < g.cities.length - 1 && (
+                    <span aria-hidden className="inline-block size-2 shrink-0 rounded-full bg-ember" />
+                  )}
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
 
 /* ───────── афиша у курсора (list, desktop) ───────── */
 function PosterFollower({ src }: { src: string | null }) {
@@ -388,6 +425,10 @@ export default function Tour() {
             </button>
           ))}
         </div>
+      </div>
+
+      <div className="mt-[var(--space-block)]">
+        <PlayedIn />
       </div>
 
       <div className="mt-[var(--space-block)]">

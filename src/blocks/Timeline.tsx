@@ -10,7 +10,9 @@ type Stage = (typeof timeline)[number]
 
 const range = (s: Stage) => {
   if (s.kind === 'award') return String(s.from)
+  const custom = (s as { rangeLabel?: string }).rangeLabel
   const to = s.to == null ? T.now : String(s.to)
+  if (custom) return `${custom} – ${to}`
   return s.from === s.to ? String(s.from) : `${s.from} – ${to}`
 }
 const where = (s: Stage) => [s.venue, s.place].filter(Boolean).join(' · ')

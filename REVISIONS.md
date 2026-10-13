@@ -18,8 +18,8 @@
 - **Проверить глазами:** 375 и 390, отступ вордмарка от пилюли BOOK и от головы.
 
 ## 2. Контент: таймлайн
-- **Сделано:** 2009–2011 — «Freelance DJ & Marketing Manager», Buddha Bar (без Египта). The Foundry — 2024–2025 (с ноября 2024). Добавлено 2025 — NOW: Haus, Bahrain, Resident DJ, `needsConfirm: true`. Резидентств 4 (Lomonosov, Tommy Lee, The Foundry, Haus). `bio.short`: «residencies in Russia and Bahrain». Мета-описание в `index.html` исправлено. CHECKLIST.md обновлён. Hurghada остаётся в туре (гиги).
-- **Допущение:** The Foundry получил `to: 2025`, раз Haus назван «текущим местом». Если Foundry продолжается, убрать `to` в `content.json`.
+- **Сделано:** 2009–2011 — «Freelance DJ & Marketing Manager», Buddha Bar (без Египта). The Foundry — 2024–2025 (с ноября 2024). Добавлено 2025 — NOW: Haus Lounge, Bahrain, Resident DJ, `needsConfirm: true`. Резидентств 4 (Lomonosov, Tommy Lee, The Foundry, Haus Lounge). `bio.short`: «residencies in Russia and Bahrain». Мета-описание в `index.html` исправлено. CHECKLIST.md обновлён. Hurghada остаётся в туре (гиги).
+- **Допущение:** The Foundry получил `to: 2025`, раз Haus Lounge назван «текущим местом». Если Foundry продолжается, убрать `to` в `content.json`.
 - **Проверить глазами:** Timeline (9 этапов), подпись Stats «4 residencies».
 
 ## 3. Stats: переделано полностью

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import QRCode from 'qrcode'
 import { content, assetUrl, type TourItem } from '@/lib/content'
 import { fmtDate, groupOf } from '@/lib/format'
+import { statValue } from '@/lib/stats'
 import Logo from '@/components/Logo'
 
 const { artist, manifest, bio, stats, genres, videos, timeline, tour, press, contacts, hero, ui, site } = content
@@ -73,7 +74,6 @@ const ITEMS = [...tour.items].reverse()
 const place = (it: TourItem) => [it.city, it.country].filter(Boolean).join(' · ')
 
 export default function Print() {
-  const years = new Date().getFullYear() - artist.since
   const videoUrls = useMemo(() => videos.map((v) => site.url + v.src), [])
   const qr = useQr(videoUrls)
   const photo = press.find((p) => p.src.includes('press-03'))!
@@ -156,12 +156,12 @@ export default function Print() {
             'linear-gradient(90deg, var(--crimson), color-mix(in srgb, var(--red) 80%, var(--ink)) 40%, color-mix(in srgb, var(--ember) 62%, var(--ink)))',
         }}
       >
-        <ul className="absolute inset-x-[56px] bottom-[170px] m-0 grid list-none grid-cols-4 gap-8 p-0">
+        <ul className="absolute inset-x-[56px] bottom-[230px] m-0 grid list-none grid-cols-4 gap-8 p-0">
           {stats.map((s) => {
-            const n = s.format === 'yearsSince' ? years : s.value
+            const n = statValue(s)
             return (
               <li key={s.label} className="border-t border-bone/50 pt-6">
-                <span className="stat-num block" style={{ fontSize: '300px', lineHeight: 0.95 }}>{n}</span>
+                <span className="stat-num block" style={{ fontSize: '150px', lineHeight: 0.95 }}>{n}</span>
                 <span className="t-micro mt-4 block">{s.label}</span>
               </li>
             )
@@ -256,7 +256,7 @@ export default function Print() {
                   className={`absolute left-0 size-3 rounded-full ${award ? 'bg-ember' : 'bg-bone-faint'}`}
                   style={up ? { bottom: -40 } : { top: -40 }}
                 />
-                <p className="t-micro m-0 text-bone-dim">{award || s.from === s.to ? s.from : `${s.from} – ${to}`}</p>
+                <p className="t-micro m-0 text-bone-dim">{award || s.from === s.to ? s.from : `${(s as { rangeLabel?: string }).rangeLabel ?? s.from} – ${to}`}</p>
                 <p className={`t-md-cond m-0 mt-2 ${award ? 'text-ember' : ''}`} style={{ fontSize: '28px' }}>{s.title}</p>
                 <p className="t-micro m-0 mt-2 text-bone-dim">{[s.venue, s.place].filter(Boolean).join(' · ')}</p>
               </li>
