@@ -10,6 +10,18 @@ const { artist, hero, ui } = content
 const CUTOUT_SCALE = 0.85
 const DESKTOP = '(min-width: 768px)'
 
+/** true на desktop. Условный рендер, а не display:none: скрытая <img> всё равно скачивается. */
+function useDesktop() {
+  const [on, setOn] = useState(() => window.matchMedia(DESKTOP).matches)
+  useEffect(() => {
+    const mq = window.matchMedia(DESKTOP)
+    const f = () => setOn(mq.matches)
+    mq.addEventListener('change', f)
+    return () => mq.removeEventListener('change', f)
+  }, [])
+  return on
+}
+
 /** Готов ли слой с артистом. Без него вордмарк ляжет на лицо, поэтому ждём decode(). */
 function useCutoutReady() {
   const [ready, setReady] = useState(() => !hero.cutout)
@@ -49,6 +61,7 @@ export default function Hero() {
   const shade = useRef<HTMLDivElement>(null)
   const side = useRef<HTMLDivElement>(null)
   const intro = useIntroDone()
+  const desktop = useDesktop()
   const mediaReady = useCutoutReady()
   const go = intro && mediaReady
 
@@ -148,7 +161,7 @@ export default function Hero() {
         </h1>
 
         {/* слой 3: артист без фона (desktop) */}
-        {hero.cutout && (
+        {hero.cutout && desktop && (
           <div
             ref={cutout}
             className="hero-cutout pointer-events-none absolute inset-0 z-[2] hidden will-change-transform md:block"
