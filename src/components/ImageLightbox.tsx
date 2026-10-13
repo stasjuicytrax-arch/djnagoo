@@ -91,8 +91,9 @@ export default function ImageLightbox({
     >
       {item && (
         <div
-          className="grid h-full w-full place-items-center p-4"
+          className="grid h-full w-full touch-pan-y place-items-center p-4"
           onPointerDown={(e) => (start.current = e.clientX)}
+          onPointerCancel={() => (start.current = null)}
           onPointerUp={(e) => {
             if (start.current === null) return
             const dx = e.clientX - start.current

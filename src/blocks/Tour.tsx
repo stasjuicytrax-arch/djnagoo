@@ -380,7 +380,7 @@ export default function Tour() {
               type="button"
               aria-pressed={view === v}
               onClick={() => setView(v)}
-              className={`t-micro rounded-full border px-4 py-3 transition-colors ${
+              className={`t-micro min-h-11 rounded-full border px-4 transition-colors ${
                 view === v ? 'border-ember bg-ember text-ink' : 'border-bone-faint text-bone hover:border-bone'
               }`}
             >

@@ -6,6 +6,13 @@ import { scrollToId } from '@/lib/smooth'
 export default function FloatingCta() {
   const [show, setShow] = useState(false)
   const [covered, setCovered] = useState(false)
+  // блоки монтируются лениво и заменяют заглушки: наблюдатели пересоздаём по событию
+  const [gen, setGen] = useState(0)
+  useEffect(() => {
+    const f = () => setGen((g) => g + 1)
+    window.addEventListener('nagoo:sections', f)
+    return () => window.removeEventListener('nagoo:sections', f)
+  }, [])
   const btn = useRef<HTMLAnchorElement>(null)
 
   useEffect(() => {
@@ -31,7 +38,7 @@ export default function FloatingCta() {
       a.disconnect()
       b?.disconnect()
     }
-  }, [])
+  }, [gen])
 
   // Кружок прячется, пока под ним текст или горячий фон: любой [data-avoid-cta] в зоне кнопки
   useEffect(() => {

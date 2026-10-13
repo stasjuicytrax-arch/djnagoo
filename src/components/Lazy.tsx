@@ -22,7 +22,10 @@ export default function Lazy({ id, load, minHeight }: { id: string; load: Loader
         if (!alive) return
         setComp(() => m.default)
         // высота страницы изменилась: пересчитать триггеры
-        window.setTimeout(() => ScrollTrigger.refresh(), 120)
+        window.setTimeout(() => {
+          ScrollTrigger.refresh()
+          window.dispatchEvent(new Event('nagoo:sections'))
+        }, 120)
       })
     }
     // ?eager и /print: смонтировать сразу (проверки детектором, Playwright, PDF)

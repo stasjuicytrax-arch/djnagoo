@@ -149,7 +149,7 @@ export default function Timeline() {
       <div className={calm ? "md:overflow-x-auto" : "md:sticky md:top-0 md:h-svh md:overflow-hidden"}>
         <ul
           ref={track}
-          className={`timeline-track relative m-0 flex list-none flex-col gap-0 px-[var(--gutter-x)] p-0 md:w-max md:flex-row md:items-stretch md:gap-[6vw] md:will-change-transform ${calm ? "md:min-h-[70svh]" : "md:h-svh"}`}
+          className={`timeline-track relative m-0 flex list-none flex-col gap-0 px-[var(--gutter-x)] p-0 md:w-max md:flex-row md:items-stretch md:gap-[6vw] ${calm ? "md:min-h-[70svh]" : "md:h-svh"}`}
         >
           <li className="shrink-0 pb-[var(--space-block)] md:flex md:w-[min(44vw,640px)] md:pb-0 md:flex-col md:justify-center">
             <SectionTitle lines={ui.titles.timeline} />
@@ -173,10 +173,10 @@ export default function Timeline() {
               >
               <defs>
                 <linearGradient id="tl-grad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2={path.w} y2="0">
-                  <stop offset="0" stopColor="#920228" />
-                  <stop offset=".38" stopColor="#C21A2A" />
-                  <stop offset=".82" stopColor="#F66526" />
-                  <stop offset="1" stopColor="#FF8A3D" />
+                  <stop offset="0" style={{ stopColor: "var(--crimson)" }} />
+                  <stop offset=".38" style={{ stopColor: "var(--red)" }} />
+                  <stop offset=".82" style={{ stopColor: "var(--ember)" }} />
+                  <stop offset="1" style={{ stopColor: "var(--ember-hot)" }} />
                 </linearGradient>
               </defs>
               <path d={path.d} fill="none" stroke="var(--line)" strokeWidth="1" />

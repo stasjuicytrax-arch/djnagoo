@@ -172,7 +172,7 @@ export default function Gallery() {
                     data-cursor="view"
                     aria-label={`${G.open}: ${s.caption}`}
                     onClick={() => setOpen(si)}
-                    className="gallery-tile absolute left-0 top-0 aspect-[4/5] h-full overflow-hidden rounded-[20px] bg-ember will-change-transform"
+                    className="gallery-tile absolute left-0 top-0 aspect-[4/5] h-full overflow-hidden rounded-[20px] bg-ember"
                   >
                     <img
                       src={s.src}
@@ -210,7 +210,7 @@ export default function Gallery() {
           type="button"
           onClick={() => setPaused((p) => !p)}
           aria-pressed={paused}
-          className="t-micro link-draw absolute bottom-6 left-[var(--gutter-x)] z-20 py-3 text-bone-dim hover:text-bone"
+          className="t-micro link-draw absolute bottom-6 left-[var(--gutter-x)] z-20 inline-flex min-h-11 items-center text-bone-dim hover:text-bone"
         >
           {paused ? ui.motion.play : ui.motion.pause}
         </button>

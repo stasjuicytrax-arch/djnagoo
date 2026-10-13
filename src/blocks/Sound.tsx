@@ -130,7 +130,7 @@ export default function Sound() {
               type="button"
               onClick={() => setPaused((p) => !p)}
               aria-pressed={paused}
-              className="t-micro link-draw relative mt-6 inline-block py-3 text-bone-dim hover:text-bone"
+              className="t-micro link-draw relative mt-6 inline-flex min-h-11 items-center text-bone-dim hover:text-bone"
             >
               {paused ? ui.motion.play : ui.motion.pause}
             </button>

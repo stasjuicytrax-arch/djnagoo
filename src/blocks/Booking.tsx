@@ -56,8 +56,10 @@ export default function Booking() {
       try {
         document.execCommand('copy')
       } catch {
-        /* ничего: тост не показываем */
         document.body.removeChild(t)
+        setToast(B.copyFailed)
+        window.clearTimeout(timer.current)
+        timer.current = window.setTimeout(() => setToast(null), 1800)
         return
       }
       document.body.removeChild(t)
@@ -124,7 +126,7 @@ export default function Booking() {
               key={r.key}
               className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3 border-t border-bone/40 px-3 py-4 first:border-t-0 md:px-4"
             >
-              <a href={r.href} className="link-draw relative min-w-0">
+              <a href={r.href} className="link-draw relative flex min-h-11 min-w-0 flex-col justify-center">
                 <span className="t-micro block text-bone">{r.label}</span>
                 <span className="t-md block truncate">{r.text}</span>
               </a>
@@ -179,7 +181,7 @@ export default function Booking() {
           <button
             type="button"
             onClick={() => scrollToId('hero')}
-            className="link-draw relative py-2 uppercase text-bone"
+            className="link-draw relative inline-flex min-h-11 items-center uppercase text-bone"
           >
             {B.back}
           </button>
@@ -193,7 +195,7 @@ export default function Booking() {
         className="t-micro pointer-events-none fixed bottom-24 left-1/2 z-[70] -translate-x-1/2 rounded-full bg-bone px-5 py-3 text-ink transition-opacity duration-[var(--dur-xs)]"
         style={{ opacity: toast ? 1 : 0 }}
       >
-        {toast ? `${ui.copied}: ${toast}` : ''}
+        {toast ? (toast === B.copyFailed ? toast : `${ui.copied}: ${toast}`) : ''}
       </p>
     </section>
   )
@@ -209,7 +211,7 @@ function SocialRow({ href, name, handle }: { href: string; name: string; handle:
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="link-draw relative min-w-0"
+      className="link-draw relative flex min-h-11 min-w-0 flex-col justify-center"
     >
       <span className="t-micro block text-bone">{name}</span>
       <span className="t-md block truncate">{handle}</span>
