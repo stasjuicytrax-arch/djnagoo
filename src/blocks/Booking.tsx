@@ -41,7 +41,7 @@ const HAZE_MASK = (() => {
 })()
 
 /**
- * 09 · Booking + Footer. Фон: дымка WebGL (velvet-haze в палитре crimson/ember).
+ * 08 · Booking + Footer. Фон: дымка WebGL (velvet-haze в палитре crimson/ember).
  * Контакты: ссылка открывает действие, отдельная кнопка копирует в буфер с тостом COPIED.
  * Футер: полутоновой вордмарк, обрезанный нижним краем.
  */

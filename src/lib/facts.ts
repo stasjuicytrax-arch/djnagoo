@@ -16,3 +16,8 @@ export function statValue(s: Stat): number {
   if (f === 'playedCities') return CITY_COUNT
   return v
 }
+
+/** Строка фактов для Manifest и /print: «21 YEARS · 4 RESIDENCIES · 5 COUNTRIES · 10 CITIES». */
+export function factsLine(): string {
+  return stats.map((s) => `${statValue(s)} ${s.label}`).join(' · ')
+}

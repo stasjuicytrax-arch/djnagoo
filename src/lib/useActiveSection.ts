@@ -4,7 +4,7 @@ import { content } from '@/lib/content'
 const ids = content.ui.sections
 
 /**
- * Индекс секции под центром вьюпорта. Блоки ниже Stats монтируются лениво и заменяют заглушку
+ * Индекс секции под центром вьюпорта. Блоки ниже Manifest монтируются лениво и заменяют заглушку
  * другим DOM-узлом, поэтому наблюдатель пересоздаётся по событию `nagoo:sections`.
  */
 export function useActiveSection() {

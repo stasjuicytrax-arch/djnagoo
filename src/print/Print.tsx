@@ -2,10 +2,10 @@ import { useEffect, useMemo, useState } from 'react'
 import QRCode from 'qrcode'
 import { content, assetUrl, type TourItem } from '@/lib/content'
 import { fmtDate, groupOf } from '@/lib/format'
-import { statValue } from '@/lib/stats'
+import { factsLine } from '@/lib/facts'
 import Logo from '@/components/Logo'
 
-const { artist, manifest, bio, stats, genres, videos, timeline, tour, press, contacts, hero, ui, site } = content
+const { artist, manifest, bio, genres, videos, timeline, tour, press, contacts, hero, ui, site } = content
 
 /**
  * Маршрут /print (или ?print=1): каждая секция — слайд 1920×1080, всё в финальном состоянии,
@@ -48,7 +48,7 @@ const Corner = ({ n }: { n: number }) => (
   <>
     <Logo className="absolute left-[56px] top-[44px] w-[110px]" />
     <p className="t-micro absolute bottom-[40px] right-[56px] tabular-nums">
-      {String(n).padStart(2, '0')} / 09
+      {String(n).padStart(2, '0')} / 08
     </p>
     <p className="t-micro absolute bottom-[40px] left-[56px]">
       {ui.live} {artist.base}
@@ -77,7 +77,6 @@ export default function Print() {
   const videoUrls = useMemo(() => videos.map((v) => site.url + v.src), [])
   const qr = useQr(videoUrls)
   const photo = press.find((p) => p.src.includes('press-03'))!
-  const press04 = press.find((p) => p.src.includes('press-04'))!
   const groups = useMemo(() => {
     const m = new Map<string, number>()
     tour.items.forEach((it) => m.set(groupOf(it), (m.get(groupOf(it)) ?? 0) + 1))
@@ -139,38 +138,17 @@ export default function Print() {
         <div className="absolute bottom-[110px] left-[1280px] w-[580px]">
           <p className="t-body" style={{ fontSize: '19px' }}>{bio.short}</p>
           <ul className="t-micro m-0 mt-6 list-none p-0">
-            {artist.highlights.map((h) => (
+            {[factsLine(), ...artist.highlights].map((h) => (
               <li key={h} className="border-t border-ink/30 py-3">{h}</li>
             ))}
           </ul>
         </div>
         <Logo className="absolute left-[56px] top-[44px] w-[110px] text-ink" />
-        <p className="t-micro absolute bottom-[40px] right-[56px]">02 / 09</p>
+        <p className="t-micro absolute bottom-[40px] right-[56px]">02 / 08</p>
       </Slide>
 
-      {/* 3 · Stats */}
-      <Slide
-        id="stats"
-        style={{
-          backgroundImage:
-            'linear-gradient(90deg, var(--crimson), color-mix(in srgb, var(--red) 80%, var(--ink)) 40%, color-mix(in srgb, var(--ember) 62%, var(--ink)))',
-        }}
-      >
-        <ul className="absolute inset-x-[56px] bottom-[230px] m-0 grid list-none grid-cols-4 gap-8 p-0">
-          {stats.map((s) => {
-            const n = statValue(s)
-            return (
-              <li key={s.label} className="border-t border-bone/50 pt-6">
-                <span className="stat-num block" style={{ fontSize: '150px', lineHeight: 0.95 }}>{n}</span>
-                <span className="t-micro mt-4 block">{s.label}</span>
-              </li>
-            )
-          })}
-        </ul>
-        <Corner n={3} />
-      </Slide>
 
-      {/* 4 · Sound */}
+      {/* 3 · Sound */}
       <Slide id="sound">
         <div className="absolute left-[56px] top-[150px]">
           <H lines={ui.titles.sound} />
@@ -187,7 +165,7 @@ export default function Print() {
             />
           ))}
           <div className="absolute left-1/2 top-1/2 size-[260px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full bg-ember">
-            <img src={assetUrl(press04.src)} alt="" className="size-full object-cover" />
+            <img src={assetUrl(hero.vinylLabel)} alt="" className="size-full object-cover" />
           </div>
           {genres.map((g, i) => {
             const ring = i < 3 ? 0 : i < 6 ? 1 : 2
@@ -206,10 +184,10 @@ export default function Print() {
             )
           })}
         </div>
-        <Corner n={4} />
+        <Corner n={3} />
       </Slide>
 
-      {/* 5 · Video: постеры + QR */}
+      {/* 4 · Video: постеры + QR */}
       <Slide id="video">
         <div className="absolute left-[56px] top-[120px]">
           <H lines={ui.titles.video} />
@@ -231,10 +209,10 @@ export default function Print() {
             )
           })}
         </ul>
-        <Corner n={5} />
+        <Corner n={4} />
       </Slide>
 
-      {/* 6 · Path */}
+      {/* 5 · Path */}
       <Slide id="timeline">
         <div className="absolute left-[56px] top-[110px]">
           <H lines={ui.titles.timeline} />
@@ -263,10 +241,10 @@ export default function Print() {
             )
           })}
         </ol>
-        <Corner n={6} />
+        <Corner n={5} />
       </Slide>
 
-      {/* 7a · Tour: список */}
+      {/* 6a · Tour: список */}
       <Slide id="tour-list">
         <div className="absolute left-[56px] top-[90px] flex items-end gap-10">
           <H lines={ui.titles.tour} />
@@ -283,10 +261,10 @@ export default function Print() {
             </li>
           ))}
         </ul>
-        <Corner n={7} />
+        <Corner n={6} />
       </Slide>
 
-      {/* 7b · Tour: афиши */}
+      {/* 6b · Tour: афиши */}
       <Slide id="tour-posters">
         <ul className="absolute inset-x-[56px] top-[110px] m-0 grid list-none grid-cols-8 gap-x-5 gap-y-10 p-0">
           {tour.items.map((it) => (
@@ -296,10 +274,10 @@ export default function Print() {
             </li>
           ))}
         </ul>
-        <Corner n={7} />
+        <Corner n={6} />
       </Slide>
 
-      {/* 8 · Gallery: коллаж */}
+      {/* 7 · Gallery: коллаж */}
       <Slide id="gallery">
         <ul className="absolute inset-0 m-0 grid list-none grid-cols-8 grid-rows-3 gap-3 p-6">
           {[...press.map((p) => p.src), ...tour.items.slice(0, 12).map((t) => t.poster), ...videos.map((v) => v.poster)]
@@ -315,10 +293,10 @@ export default function Print() {
             <H lines={ui.titles.gallery} />
           </div>
         </div>
-        <Corner n={8} />
+        <Corner n={7} />
       </Slide>
 
-      {/* 9 · Booking */}
+      {/* 8 · Booking */}
       <Slide id="booking" style={{ backgroundImage: 'var(--grad-glow)' }}>
         <div className="absolute inset-x-0 top-[130px] text-center">
           <H lines={ui.titles.booking} />
@@ -335,7 +313,7 @@ export default function Print() {
             </li>
           ))}
         </ul>
-        <Corner n={9} />
+        <Corner n={8} />
       </Slide>
     </main>
   )

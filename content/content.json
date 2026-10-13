@@ -26,7 +26,6 @@
     },
     "labelNote": "Partner of GATE13; SoundCloud: GATE13",
     "highlights": [
-      "DJ since 2005",
       "Best DJ Saint Petersburg, Russia — 2018",
       "Partner of GATE13"
     ]
@@ -41,7 +40,7 @@
       { "id": "gallery", "label": "Gallery" },
       { "id": "booking", "label": "Book" }
     ],
-    "sections": ["hero", "manifest", "stats", "sound", "video", "timeline", "tour", "gallery", "booking"],
+    "sections": ["hero", "manifest", "sound", "video", "timeline", "tour", "gallery", "booking"],
     "live": "Live from",
     "titles": {
       "sound": ["The sound"],
@@ -136,7 +135,7 @@
     { "label": "countries", "format": "playedCountries" },
     { "label": "cities", "format": "playedCities" }
   ],
-  "_statsNote": "Годы стажа: currentYear − 2005. Резидентства: Lomonosov Club, Tommy Lee Club, The Foundry, Haus Lounge (4). Страны и города считаются из playedIn (5 стран, 10 городов, Sevastopol только в города).",
+  "_statsNote": "Не отдельный блок (R2-9): одна mono-строка в Manifest. Годы стажа: currentYear − 2005. Резидентства: Lomonosov Club, Tommy Lee Club, The Foundry, Haus Lounge (4). Страны и города считаются из playedIn (5 стран, 10 городов, Sevastopol только в города).",
 
   "tour": {
     "_note": "ВСЕ 16 афиш из папки Afisha. Порядок — хронологический. date=null → дата на афише не указана, месяц взят из даты файла (needsConfirm).",

@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef } from 'react'
 import { content, assetUrl } from '@/lib/content'
 import { gsap, reducedMotion } from '@/lib/smooth'
+import { factsLine } from '@/lib/facts'
 
 const { manifest, bio, artist, press } = content
 const photo = press.find((p) => p.src.includes('press-03'))!
@@ -126,7 +127,7 @@ export default function Manifest() {
         >
           <p className="t-body">{bio.short}</p>
           <ul className="t-micro m-0 list-none p-0">
-            {artist.highlights.map((h) => (
+            {[factsLine(), ...artist.highlights].map((h) => (
               <li key={h} className="border-t border-ink/25 py-3 first:border-t-ink/40">
                 {h}
               </li>

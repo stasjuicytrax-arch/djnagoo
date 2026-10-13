@@ -230,18 +230,7 @@ body {
   }
 }
 
-/* 03 · Stats: живой фон crimson → ember (ember смешан с ink: bone-текст держит ≥4.5:1), Archivo wdth 62 / wght 800 */
-.stats-bg {
-  background-image: linear-gradient(
-    90deg,
-    var(--crimson) 0%,
-    color-mix(in srgb, var(--red) 80%, var(--ink)) 30%,
-    color-mix(in srgb, var(--ember) 74%, var(--ink)) 62%,
-    color-mix(in srgb, var(--ember-hot) 70%, var(--ink)) 100%
-  );
-  background-size: 260% 100%;
-  background-position: 0% 50%;
-}
+/* Цифры Archivo wdth 62 / wght 800 (прелоадер) */
 .stat-num {
   font-family: var(--font-display);
   font-stretch: 62%;

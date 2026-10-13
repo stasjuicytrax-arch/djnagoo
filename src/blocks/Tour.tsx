@@ -4,7 +4,7 @@ import { getLenis, reducedMotion } from '@/lib/smooth'
 import SectionTitle from '@/components/SectionTitle'
 import ImageLightbox, { type LightboxItem } from '@/components/ImageLightbox'
 import { fmtDate, groupOf } from '@/lib/format'
-import { COUNTRY_COUNT, CITY_COUNT } from '@/lib/stats'
+import { COUNTRY_COUNT, CITY_COUNT } from '@/lib/facts'
 
 const { tour, venues, ui } = content
 const T = ui.tour
@@ -383,7 +383,7 @@ function VenueMarquee() {
 }
 
 /**
- * 07 · Tour. Вид A: список 16 дат (новые сверху), hover заливает строку градиентом и показывает афишу
+ * 06 · Tour. Вид A: список 16 дат (новые сверху), hover заливает строку градиентом и показывает афишу
  * у курсора. Вид B: стеклянные папки по 5 городам (концепт 21st glass-folder-cards), клик раскрывает
  * афиши веером. Клик по афише → лайтбокс. Внизу marquee площадок.
  */

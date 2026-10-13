@@ -8,7 +8,6 @@ import FloatingCta from '@/components/FloatingCta'
 import Preloader from '@/components/Preloader'
 import Hero from '@/blocks/Hero'
 import Manifest from '@/blocks/Manifest'
-import Stats from '@/blocks/Stats'
 import Lazy from '@/components/Lazy'
 
 const loadSound = () => import('@/blocks/Sound')
@@ -47,7 +46,6 @@ export default function App() {
       <main>
         <Hero />
         <Manifest />
-        <Stats />
         <Lazy id="sound" load={loadSound} minHeight="100svh" />
         <Lazy id="video" load={loadVideo} minHeight="100svh" />
         <Lazy id="timeline" load={loadTimeline} minHeight="100svh" />
