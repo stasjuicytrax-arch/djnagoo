@@ -18,3 +18,15 @@ E-press-kit (сайт-презентация) DJ NAGOO для букинг-аг�
 npx impeccable install && npx skills add Leonxlnx/taste-skill
 # затем в Claude Code: /impeccable init → читать TZ.md и DESIGN.md
 ```
+
+## PDF-версия
+
+Маршрут `/print` (или `?print=1`) отдаёт 10 слайдов 1920×1080: видео заменены постерами с QR, WebGL — статичным градиентом.
+
+```bash
+npm run build -- --base=/djnagoo/
+npx vite preview --base=/djnagoo/ --port 4173
+npm run pdf            # node scripts/export-pdf.mjs → DJ-NAGOO-press-kit.pdf
+```
+
+Нужен Chrome (`CHROME_PATH`) или `npx playwright-core install chromium`.

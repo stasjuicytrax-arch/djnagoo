@@ -336,3 +336,17 @@ body {
   outline-color: var(--ink);
   outline-offset: -6px;
 }
+
+/* /print: слайды 1920×1080, фоны печатаются */
+@page {
+  size: 1920px 1080px;
+  margin: 0;
+}
+@media print {
+  html,
+  body {
+    background: var(--ink);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

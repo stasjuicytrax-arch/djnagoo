@@ -1,6 +1,11 @@
 {
   "_note": "Единый источник контента для сайта. Сайт рендерит ТОЛЬКО отсюда — ничего не хардкодить в компонентах. Поля со значением needsConfirm=true нужно подтвердить у артиста до релиза.",
 
+  "site": {
+    "url": "https://stasjuicytrax-arch.github.io/djnagoo/",
+    "_note": "Публичный адрес: QR-коды и ссылки в PDF."
+  },
+
   "artist": {
     "name": "DJ NAGOO",
     "wordmark": "DJNAGOO",
