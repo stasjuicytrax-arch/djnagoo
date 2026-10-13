@@ -49,3 +49,7 @@
 
 ## Блокеры
 Нет. Упрощений из-за 3 неудачных попыток нет.
+
+## R2-10. WRITE → WhatsApp
+- **Сделано:** круглая CTA ведёт на `https://wa.me/97333074445?text=…` (target _blank, rel noopener), текст «Hi Nagoo! I'd like to discuss a booking. Date: … Venue: … City: …» в `contacts.whatsappText`. WHATSAPP в строке телефона использует ту же ссылку; у почты добавлена OPEN (mailto) рядом с COPY. aria-label «Write to DJ NAGOO on WhatsApp», курсор над кнопкой «WHATSAPP». В /print на слайде Booking QR на эту же ссылку.
+- **Проверить глазами:** на телефоне с WhatsApp открывается приложение, на desktop — WhatsApp Web с предзаполненным текстом.

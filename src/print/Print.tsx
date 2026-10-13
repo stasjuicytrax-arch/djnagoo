@@ -3,6 +3,7 @@ import QRCode from 'qrcode'
 import { content, assetUrl, type TourItem } from '@/lib/content'
 import { fmtDate, groupOf } from '@/lib/format'
 import { factsLine } from '@/lib/facts'
+import { whatsappUrl } from '@/lib/contact'
 import Logo from '@/components/Logo'
 
 const { artist, manifest, bio, genres, videos, timeline, tour, press, contacts, hero, ui, site } = content
@@ -76,6 +77,7 @@ const place = (it: TourItem) => [it.city, it.country].filter(Boolean).join(' · 
 export default function Print() {
   const videoUrls = useMemo(() => videos.map((v) => site.url + v.src), [])
   const qr = useQr(videoUrls)
+  const waQr = useQr([whatsappUrl()])
   const photo = press.find((p) => p.src.includes('press-03'))!
   const groups = useMemo(() => {
     const m = new Map<string, number>()
@@ -90,7 +92,7 @@ export default function Print() {
       document.fonts.ready,
       ...imgs.map((i) => (i.complete ? Promise.resolve() : new Promise((r) => (i.onload = i.onerror = () => r(null))))),
     ]).then(() => ((window as unknown as { __printReady?: boolean }).__printReady = true))
-  }, [qr.length])
+  }, [qr.length, waQr.length])
 
   return (
     <main className="bg-ink">
@@ -313,6 +315,12 @@ export default function Print() {
             </li>
           ))}
         </ul>
+        {waQr[0] && (
+          <figure className="absolute left-[1470px] top-[600px] m-0 w-[180px]">
+            <img src={waQr[0]} alt="" className="size-[180px] rounded-[12px]" />
+            <figcaption className="t-micro mt-3 text-center">{ui.booking.whatsapp}</figcaption>
+          </figure>
+        )}
         <Corner n={8} />
       </Slide>
     </main>

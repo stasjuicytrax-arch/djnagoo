@@ -3,6 +3,7 @@ import { content } from '@/lib/content'
 import { scrollToId } from '@/lib/smooth'
 import SectionTitle from '@/components/SectionTitle'
 import HazeCanvas from '@/components/HazeCanvas'
+import { whatsappUrl } from '@/lib/contact'
 
 const { contacts, ui, artist } = content
 const B = ui.booking
@@ -120,9 +121,15 @@ export default function Booking() {
       text: contacts.phone,
       label: B.call,
       href: contacts.phoneHref,
-      extra: { label: B.whatsapp, href: contacts.whatsapp },
+      extra: { label: B.whatsapp, href: whatsappUrl(), blank: true },
     },
-    { key: 'mail', text: contacts.email, label: B.email, href: `mailto:${contacts.email}`, extra: null },
+    {
+      key: 'mail',
+      text: contacts.email,
+      label: B.email,
+      href: `mailto:${contacts.email}`,
+      extra: { label: B.open, href: `mailto:${contacts.email}`, blank: false },
+    },
   ]
 
   type Soc = { handle: string; url: string | null }
@@ -166,7 +173,11 @@ export default function Booking() {
           ref={cta.ref}
           onPointerMove={cta.onPointerMove}
           onPointerLeave={cta.onPointerLeave}
-          href={`mailto:${contacts.email}`}
+          href={whatsappUrl()}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={B.writeAria}
+          data-cursor="whatsapp"
           data-avoid-cta
           className="write-cta t-md-cond grid size-[160px] place-items-center rounded-full bg-ember text-center text-ink transition-[background-color,scale] duration-[var(--dur-s)] hover:scale-[1.08] hover:bg-ember-hot"
           style={{ transitionTimingFunction: 'var(--ease-out)' }}
@@ -189,8 +200,7 @@ export default function Booking() {
                 {r.extra && (
                   <a
                     href={r.extra.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    {...(r.extra.blank ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                     className="glass-pill t-micro grid min-h-11 place-items-center rounded-full px-4"
                   >
                     {r.extra.label}
