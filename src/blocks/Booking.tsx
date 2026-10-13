@@ -1,9 +1,8 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { content } from '@/lib/content'
 import { scrollToId } from '@/lib/smooth'
 import SectionTitle from '@/components/SectionTitle'
 import HazeCanvas from '@/components/HazeCanvas'
-import HalftoneFooter from '@/components/HalftoneFooter'
 
 const { contacts, ui, artist } = content
 const B = ui.booking
@@ -41,6 +40,34 @@ export default function Booking() {
   const [copied, setCopied] = useState<string | null>(null)
   const timer = useRef(0)
   const cta = useMagnet<HTMLAnchorElement>(14)
+  const root = useRef<HTMLElement>(null)
+  const gain = useRef(0)
+  const glow = useRef<HTMLDivElement>(null)
+  const [refract, setRefract] = useState(false)
+
+  // «рассвет»: на входе секции почти темно, к моменту BOOK NAGOO в центре — полная яркость
+  useEffect(() => {
+    const el = root.current
+    if (!el) return
+    const update = () => {
+      const top = el.getBoundingClientRect().top
+      const vh = window.innerHeight
+      gain.current = Math.min(1, Math.max(0, (vh - top) / (vh * 0.9)))
+      if (glow.current) glow.current.style.opacity = String(gain.current)
+    }
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    // преломление через SVG-фильтр в backdrop-filter держит только Chromium на desktop
+    const chromium = !!(navigator as Navigator & { userAgentData?: { brands: { brand: string }[] } }).userAgentData?.brands?.some(
+      (b) => /Chromium|Google Chrome|Microsoft Edge/.test(b.brand),
+    )
+    setRefract(chromium && window.matchMedia('(min-width: 768px) and (hover: hover)').matches)
+    return () => {
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+    }
+  }, [])
 
   const copy = useCallback(async (text: string) => {
     try {
@@ -90,20 +117,30 @@ export default function Booking() {
   const socials = ([contacts.facebook, contacts.soundcloud] as Soc[]).filter((x) => !!x.url)
 
   return (
-    <section id="booking" className="relative isolate overflow-hidden bg-ink text-bone">
-      {/* статичный градиент: пока нет WebGL и в reduced-motion */}
+    <section ref={root} id="booking" className="relative isolate overflow-hidden bg-ink text-bone">
+      {/* фильтр преломления для стекла (Chromium desktop) */}
+      <LiquidFilter />
+
+      {/* дымка: верх растушёван в ink на ~38vh, низ уходит в ink; яркость привязана к скроллу */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-20"
-        style={{ backgroundImage: 'var(--grad-glow)' }}
-      />
-      <HazeCanvas className="-z-10" />
+        className="absolute inset-0 -z-10"
+        style={{
+          maskImage:
+            'linear-gradient(to bottom, transparent 0, #000 min(38vh, 380px), #000 calc(100% - 24vh), transparent 100%)',
+          WebkitMaskImage:
+            'linear-gradient(to bottom, transparent 0, #000 min(38vh, 380px), #000 calc(100% - 24vh), transparent 100%)',
+        }}
+      >
+        <div ref={glow} className="absolute inset-0" style={{ backgroundImage: 'var(--grad-glow)', opacity: 0 }} />
+        <HazeCanvas gain={gain} />
+      </div>
 
       <div
-        className="relative mx-auto flex min-h-svh flex-col items-center justify-center gap-[var(--space-block)] px-[var(--gutter-x)] text-center"
-        style={{ paddingBlock: 'var(--space-section) var(--space-block)' }}
+        className="relative mx-auto flex min-h-svh flex-col items-center justify-start gap-[clamp(20px,3.2svh,40px)] px-[var(--gutter-x)] text-center"
+        style={{ paddingBlock: 'clamp(72px, 10svh, 120px) clamp(24px, 4svh, 48px)' }}
       >
-        <SectionTitle lines={ui.titles.booking} className="text-center" />
+        <SectionTitle lines={ui.titles.booking} className="text-center" style={{ fontSize: 'min(var(--t-xl), 13svh)' }} />
 
         <a
           ref={cta.ref}
@@ -117,14 +154,12 @@ export default function Booking() {
           {B.write}
         </a>
 
-        <ul
-          data-avoid-cta
-          className="m-0 flex w-full max-w-[760px] list-none flex-col rounded-[20px] bg-ink/70 p-2 text-left md:p-4"
-        >
+        <LiquidPanel refract={refract} className="w-full max-w-[760px] text-left">
+        <ul data-avoid-cta className="m-0 flex list-none flex-col p-2 md:p-4">
           {rows.map((r) => (
             <li
               key={r.key}
-              className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3 border-t border-bone/40 px-3 py-4 first:border-t-0 md:px-4"
+              className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3 border-t border-bone/25 px-3 py-4 first:border-t-0 md:px-4"
             >
               <a href={r.href} className="link-draw relative flex min-h-11 min-w-0 flex-col justify-center">
                 <span className="t-micro block text-bone">{r.label}</span>
@@ -136,7 +171,7 @@ export default function Booking() {
                     href={r.extra.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="t-micro grid min-h-11 place-items-center rounded-full border border-bone/60 px-4 transition-colors hover:border-ember hover:bg-ember hover:text-ink"
+                    className="glass-pill t-micro grid min-h-11 place-items-center rounded-full px-4"
                   >
                     {r.extra.label}
                   </a>
@@ -145,7 +180,7 @@ export default function Booking() {
                   type="button"
                   onClick={() => copy(r.text)}
                   aria-label={`${B.copy}: ${r.text}`}
-                  className="t-micro flex min-h-11 items-center gap-2 rounded-full border border-bone/60 px-4 text-bone transition-colors hover:border-ember hover:bg-ember hover:text-ink"
+                  className="glass-pill t-micro flex min-h-11 items-center gap-2 rounded-full px-4 text-bone"
                 >
                   {copied === r.text ? null : CopyIcon}
                   {copied === r.text ? B.copied : B.copy}
@@ -154,11 +189,12 @@ export default function Booking() {
             </li>
           ))}
           {ig && ig.url && (
-            <li className="flex items-center justify-between gap-4 border-t border-bone/40 px-3 py-4 md:px-4">
+            <li className="flex items-center justify-between gap-4 border-t border-bone/25 px-3 py-4 md:px-4">
               <SocialRow href={ig.url} name="Instagram" handle={ig.handle} />
             </li>
           )}
         </ul>
+        </LiquidPanel>
 
         {socials.length > 0 && (
           <ul aria-label={B.social} className="t-micro m-0 flex list-none flex-wrap justify-center gap-3 p-0">
@@ -171,21 +207,24 @@ export default function Booking() {
         {/* DOWNLOAD PRESS KIT (PDF): появится после этапа PDF, пока скрыта */}
       </div>
 
-      {/* футер */}
-      <footer data-avoid-cta className="relative bg-ink">
-        <HalftoneFooter />
-        <div className="t-micro flex flex-wrap items-center justify-between gap-4 bg-ink px-[var(--gutter-x)] pb-16 pt-5 pr-[calc(var(--gutter-x)+120px)]">
-          <p className="m-0 text-bone-dim">
-            © {new Date().getFullYear()} {artist.name} · {B.pressKit}
-          </p>
-          <button
-            type="button"
-            onClick={() => scrollToId('hero')}
-            className="link-draw relative inline-flex min-h-11 items-center uppercase text-bone"
-          >
-            {B.back}
-          </button>
-        </div>
+      {/* футер: одна тонкая строка, дымка уходит в ink к самому низу */}
+      <footer
+        data-avoid-cta
+        className="t-micro relative flex items-center justify-between gap-4 px-[var(--gutter-x)] pb-[72px] pr-[calc(var(--gutter-x)+96px)] pt-4"
+      >
+        <p className="m-0 text-bone-dim">
+          © {new Date().getFullYear()} {artist.name} · {B.pressKit}
+        </p>
+        <button
+          type="button"
+          onClick={() => scrollToId('hero')}
+          className="link-draw relative inline-flex min-h-11 items-center gap-2 uppercase text-bone"
+        >
+          {B.back}
+          <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden fill="none" stroke="currentColor" strokeWidth="1.25">
+            <path d="M4.5 14V1M1 4.5L4.5 1 8 4.5" />
+          </svg>
+        </button>
       </footer>
 
       {/* тост */}
@@ -235,5 +274,63 @@ function SocialLink({ href, label }: { href: string; label: string }) {
         {label}
       </a>
     </li>
+  )
+}
+
+/** SVG-фильтр «линзы»: карта смещения с градиентами по краям, края стекла искажают дымку за ним. */
+function LiquidFilter() {
+  const map =
+    "data:image/svg+xml;utf8," +
+    encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">' +
+        '<defs>' +
+        '<linearGradient id="l" x1="0" x2="1"><stop offset="0" stop-color="rgb(0,128,128)"/><stop offset="1" stop-color="rgb(128,128,128)"/></linearGradient>' +
+        '<linearGradient id="r" x1="0" x2="1"><stop offset="0" stop-color="rgb(128,128,128)"/><stop offset="1" stop-color="rgb(255,128,128)"/></linearGradient>' +
+        '<linearGradient id="t" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgb(128,0,128)"/><stop offset="1" stop-color="rgb(128,128,128)"/></linearGradient>' +
+        '<linearGradient id="b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgb(128,128,128)"/><stop offset="1" stop-color="rgb(128,255,128)"/></linearGradient>' +
+        '</defs>' +
+        '<rect width="400" height="300" fill="rgb(128,128,128)"/>' +
+        '<rect width="60" height="300" fill="url(#l)"/>' +
+        '<rect x="340" width="60" height="300" fill="url(#r)"/>' +
+        '<rect width="400" height="50" fill="url(#t)" opacity=".9"/>' +
+        '<rect y="250" width="400" height="50" fill="url(#b)" opacity=".9"/>' +
+        '</svg>',
+    )
+  return (
+    <svg aria-hidden width="0" height="0" className="absolute" focusable="false">
+      <filter id="liquid" x="0%" y="0%" width="100%" height="100%" colorInterpolationFilters="sRGB">
+        <feImage href={map} x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" result="map" />
+        <feDisplacementMap in="SourceGraphic" in2="map" scale="54" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </svg>
+  )
+}
+
+/** Панель «жидкое стекло»: преломление, кант-блик, подсветка за курсором, внутренний объём. */
+function LiquidPanel({
+  children,
+  className = '',
+  refract,
+}: {
+  children: React.ReactNode
+  className?: string
+  refract: boolean
+}) {
+  const ref = useRef<HTMLDivElement>(null)
+  const move = (e: React.PointerEvent<HTMLDivElement>) => {
+    const el = ref.current
+    if (!el) return
+    const r = el.getBoundingClientRect()
+    el.style.setProperty('--mx', (e.clientX - r.left).toFixed(0) + 'px')
+    el.style.setProperty('--my', (e.clientY - r.top).toFixed(0) + 'px')
+  }
+  return (
+    <div
+      ref={ref}
+      onPointerMove={move}
+      className={'liquid-glass ' + (refract ? 'liquid-refract ' : '') + className}
+    >
+      <div className="relative z-[1]">{children}</div>
+    </div>
   )
 }

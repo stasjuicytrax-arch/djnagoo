@@ -156,7 +156,7 @@ git clone https://github.com/voltagent/awesome-design-md ~/awesome-design-md   #
 - Под ней — 3 строки контактов `--t-md`: телефон (tel:) · WhatsApp · email. Каждая с copy-to-clipboard по клику и тостом `COPIED` в mono.
 - Соцссылки: Instagram · Facebook · SoundCloud (mono, magnetic).
 - Кнопка `DOWNLOAD PRESS KIT (PDF)` — появится после этапа PDF (§8). До этого скрыта.
-- **Футер:** 21st **`halftone-wordmark-footer`** с `DJNAGOO` вместо демо-слова, цвета точек ink→ember, обрезан нижним краем. Строка `© 2026 DJ NAGOO · PRESS KIT` + `BACK TO TOP ↑`.
+- **Футер:** одна тонкая mono-строка внизу секции Booking: `© 2026 DJ NAGOO · PRESS KIT` слева, `BACK TO TOP ↑` справа; дымка плавно уходит в ink к низу страницы (полутоновой вордмарк убран по ревью).
 
 ---
 
@@ -167,7 +167,6 @@ git clone https://github.com/voltagent/awesome-design-md ~/awesome-design-md   #
 | `tilted-grid-hero` (ruixen.ui) | **Берём обязательно**, как есть, контент и цвет — наши | 08 Gallery |
 | `glass-folder-cards` (kedhareswer) | **Берём**, tone dark, перекрас артов | 07 Tour (вид «Cities») |
 | `velvet-haze` (kedhareswer) | **Берём**, перекрас шейдера под crimson/ember | 09 Booking (+ опц. фон прелоадера) |
-| `halftone-wordmark-footer` (kedhareswer) | **Берём**, свой вордмарк и цвета | 09 Footer |
 | `gradient-tracing` (hextaui, dep `motion`) | **Берём**, свой path и градиент | 06 Timeline |
 | `bar-built-digits` (Remotion) | **Концепт.** Переписать на DOM + motion (Remotion для счётчика на сайте избыточен) | 00 Preloader, 03 Stats |
 | `polyrhythm-orbit-list` (Remotion) | **Концепт.** Переписать на DOM + motion (нужна интерактивность) | 04 Sound |

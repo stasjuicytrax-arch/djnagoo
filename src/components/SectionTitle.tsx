@@ -8,13 +8,14 @@ type Props = {
   id?: string
   /** Цвет точки в конце: ember по DESIGN §3.3. */
   dotClass?: string
+  style?: React.CSSProperties
 }
 
 /**
  * Заголовок секции: капс, --t-xl, line-mask + морфинг ширины 125→62 при входе (DESIGN §7),
  * в конце точка --ember (§3.3). Анимация один раз.
  */
-export default function SectionTitle({ lines, className = '', id, dotClass = 'text-ember' }: Props) {
+export default function SectionTitle({ lines, className = '', id, dotClass = 'text-ember', style }: Props) {
   const ref = useRef<HTMLHeadingElement>(null)
 
   useLayoutEffect(() => {
@@ -44,7 +45,7 @@ export default function SectionTitle({ lines, className = '', id, dotClass = 'te
   }, [])
 
   return (
-    <h2 ref={ref} id={id} className={`t-xl ${className}`}>
+    <h2 ref={ref} id={id} className={`t-xl ${className}`} style={style}>
       {lines.map((line, i) => (
         <span key={line} className="block [clip-path:inset(0_-50vw)]">
           <span className="st-in block">

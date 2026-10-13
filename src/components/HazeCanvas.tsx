@@ -16,6 +16,7 @@ uniform float uTime;
 uniform vec2 uMouse;
 uniform float uPresence;
 uniform vec3 uRip[4]; // x, y, startTime
+uniform float uGain; // 0 — почти темно, 1 — полная яркость (привязана к скроллу)
 out vec4 o;
 
 float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
@@ -63,7 +64,7 @@ void main(){
   vec3 ember = vec3(0.965, 0.396, 0.149);
   vec3 hot = vec3(1.0, 0.54, 0.24);
 
-  float k = smoothstep(0.28, 0.95, haze);
+  float k = smoothstep(0.22, 0.85, haze);
   vec3 col = mix(ink, crimson, k * 0.85);
   col = mix(col, ember, smoothstep(0.55, 1.1, haze + near * 0.35) * 0.9);
   col += hot * pow(max(haze - 0.78, 0.0), 2.0) * 1.6 * smoothstep(0.25, 0.7, uv.y);
@@ -72,13 +73,21 @@ void main(){
   float vig = smoothstep(1.25, 0.25, distance(uv, vec2(0.5)));
   col *= mix(0.35, 1.0, vig);
   // нижняя зона (контакты): темнее и без горячих бликов, чтобы текст держал контраст
-  col *= mix(0.42, 1.0, smoothstep(0.05, 0.62, uv.y));
+  col *= mix(0.72, 1.0, smoothstep(0.05, 0.62, uv.y));
   col += (hash(gl_FragCoord.xy + uTime) - 0.5) * 0.06;
+  col *= mix(0.12, 1.0, uGain);
   o = vec4(max(col, 0.0), 1.0);
 }`
 
 /** Фон Booking. Без WebGL2 или при reduced-motion остаётся статичный градиент (CSS). */
-export default function HazeCanvas({ className = '' }: { className?: string }) {
+export default function HazeCanvas({
+  className = '',
+  gain,
+}: {
+  className?: string
+  /** ref со значением 0..1: яркость дымки, обновляется снаружи по скроллу */
+  gain?: { current: number }
+}) {
   const ref = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -117,6 +126,7 @@ export default function HazeCanvas({ className = '' }: { className?: string }) {
       mouse: gl.getUniformLocation(prog, 'uMouse'),
       presence: gl.getUniformLocation(prog, 'uPresence'),
       rip: gl.getUniformLocation(prog, 'uRip'),
+      gain: gl.getUniformLocation(prog, 'uGain'),
     }
 
     const mobile = window.matchMedia('(max-width: 767px)').matches
@@ -185,6 +195,7 @@ export default function HazeCanvas({ className = '' }: { className?: string }) {
       gl.uniform2f(u.mouse, mouse.x, mouse.y)
       gl.uniform1f(u.presence, mouse.pres)
       gl.uniform3fv(u.rip, rips)
+      gl.uniform1f(u.gain, gain ? gain.current : 1)
       gl.drawArrays(gl.TRIANGLES, 0, 3)
       if (canvas.style.opacity !== '1') canvas.style.opacity = '1'
     }

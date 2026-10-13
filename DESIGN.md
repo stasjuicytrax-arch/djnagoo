@@ -198,7 +198,6 @@ BOOKING     горячо · финал       (градиент-свечение,
 | **Counter** | Stats, прелоадер | Цифры собираются из баров (концепт 21st `bar-built-digits`) |
 | **Velvet haze** | Фон Booking, Hero (вариант) | WebGL-дымка (21st `velvet-haze`), перекрашенная из серебро/фиолет в crimson/ember. Собирается под курсором |
 | **Gradient tracing** | Timeline, переходы | Линия с бегущим градиентом `--grad-sunset` (21st `gradient-tracing`) соединяет этапы карьеры |
-| **Halftone** | Футер | Вордмарк DJNAGOO точками отталкивается от курсора (21st `halftone-wordmark-footer`) |
 | **Magnetic** | CTA, соцссылки | Притяжение к курсору |
 | **Custom cursor** | Desktop | Точка 8px `--ember` → над медиа превращается в круг 72px с `PLAY` / `VIEW` / `DRAG` |
 | **Marquee** | Площадки | Бегущая строка названий клубов, скорость зависит от velocity скролла |
@@ -227,7 +226,7 @@ BOOKING     горячо · финал       (градиент-свечение,
 | Tour | Таблица + hover-афиши | Карточки-строки, тап раскрывает афишу. Glass-папки в 1 колонку |
 | Video | 3 в ряд | Свайп-карусель с snap, автоплей видимого ролика |
 | Gallery | Tilted grid на всю ширину | Та же лента, высота 70svh |
-| Курсор / magnetic / halftone-push | Да | Нет (тап-эффекты вместо hover) |
+| Курсор / magnetic | Да | Нет (тап-эффекты вместо hover) |
 | Шейдеры | Да | Да, но в половинном разрешении (`devicePixelRatio` ≤ 1) |
 
 ---
