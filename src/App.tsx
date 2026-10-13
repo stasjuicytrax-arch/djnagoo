@@ -8,6 +8,7 @@ import Cursor from '@/components/Cursor'
 import FloatingCta from '@/components/FloatingCta'
 import Preloader from '@/components/Preloader'
 import Hero from '@/blocks/Hero'
+import Manifest from '@/blocks/Manifest'
 
 export default function App() {
   useSmoothScroll()
@@ -27,8 +28,9 @@ export default function App() {
       {loading && <Preloader onDone={onDone} />}
       <main>
         <Hero />
-        {/* Временные заглушки: заменяются блоками 02–09 по порядку TZ §4 */}
-        {content.ui.sections.slice(1).map((id) => (
+        <Manifest />
+        {/* Временные заглушки: заменяются блоками 03–09 по порядку TZ §4 */}
+        {content.ui.sections.slice(2).map((id) => (
           <section
             key={id}
             id={id}

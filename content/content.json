@@ -40,6 +40,12 @@
     "copied": "Copied"
   },
 
+  "manifest": {
+    "_note": "Заголовок Manifest (TZ §4, секция 02). Точка в конце добавляется компонентом.",
+    "headline": ["Behind the decks", "for twenty", "years"],
+    "photoAlt": "DJ Nagoo laughing, black and white studio portrait"
+  },
+
   "bio": {
     "_source": "Старый PromoKit (1.jpg). Word-документ BIO и пресс-релиз в рабочей папке НЕ найдены — при их появлении заменить/дополнить этот блок.",
     "needsConfirm": true,

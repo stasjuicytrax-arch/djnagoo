@@ -86,6 +86,18 @@ export default function Frame() {
         paddingBottom: 'max(20px, env(safe-area-inset-bottom))',
       }}
     >
+      {/* на светлой секции контент уходит под рамку: мягкая подложка bone, чтобы микротекст не налезал на текст */}
+      <div
+        aria-hidden
+        className={`absolute inset-x-0 top-0 h-20 transition-opacity duration-[var(--dur-xs)] ${c.tl ? 'opacity-100' : 'opacity-0'}`}
+        style={{ background: 'linear-gradient(to bottom, var(--bone) 40%, transparent)' }}
+      />
+      <div
+        aria-hidden
+        className={`absolute inset-x-0 bottom-0 h-20 transition-opacity duration-[var(--dur-xs)] ${c.bl ? 'opacity-100' : 'opacity-0'}`}
+        style={{ background: 'linear-gradient(to top, var(--bone) 40%, transparent)' }}
+      />
+
       {/* верхний ряд: ↖ логотип · ↗ меню, на одной оси */}
       <div className="flex items-center justify-between">
         <a
