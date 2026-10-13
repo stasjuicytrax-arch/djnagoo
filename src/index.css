@@ -298,22 +298,8 @@ body {
   z-index: 2;
 }
 
-/* 08 · Gallery: дуотон ink → ember (multiply на ember), цвет проявляется в центре и по hover */
-.gallery-tile img {
-  filter: grayscale(1) contrast(1.1) brightness(1.3);
-  mix-blend-mode: multiply;
-}
-.gallery-tile[data-center='1'] img,
-.gallery-tile:hover img,
-.gallery-tile:focus-visible img {
-  filter: none;
-  mix-blend-mode: normal;
-}
-@media (prefers-reduced-motion: reduce) {
-  .gallery-tile img {
-    transition: none;
-  }
-}
+/* 08 · Gallery: фото в оригинальном цвете (без дуотона) */
+
 
 /* сжатые заголовки в списках: .t-md задаёт stretch 100%, поэтому отдельные классы */
 .t-md-cond {

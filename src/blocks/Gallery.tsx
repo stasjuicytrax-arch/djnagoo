@@ -88,8 +88,8 @@ export default function Gallery() {
       for (const r of state) {
         const cfg = ROWS[r.ri]
         const tileW = r.tiles[0].offsetWidth
-        const gap = 20
-        const pitch = tileW + gap
+        // шаг растёт на широких экранах: один и тот же кадр не бывает в ряду дважды в пределах экрана
+        const pitch = Math.max(tileW + 20, (W * 1.1) / r.tiles.length)
         const total = pitch * r.tiles.length
         if (!calm && !pausedRef.current && !hoverRef.current) r.x += (cfg.speed * 60 + Math.sign(cfg.speed) * boost * 6) * dt
         r.tiles.forEach((el, i) => {
@@ -107,7 +107,6 @@ export default function Gallery() {
           el.style.transform = `translate3d(${x}px,0,${z}px) rotateY(${rot}deg) scale(${s})`
           el.style.opacity = String(fade)
           el.style.visibility = fade < 0.02 ? 'hidden' : 'visible'
-          el.dataset.center = a < 0.16 && r.ri !== 1 ? '1' : '0'
         })
       }
     }
@@ -134,8 +133,7 @@ export default function Gallery() {
 
   const rowShots = (ri: number) => {
     // у каждого ряда свой сдвиг в общей ленте, чтобы кадры не совпадали по вертикали
-    const n = shots.length
-    return Array.from({ length: Math.min(n, 16) }, (_, i) => (i * 2 + ROWS[ri].shift) % n)
+    return shots.map((_, i) => i).filter((i) => i % ROWS.length === ri)
   }
 
   return (
@@ -146,7 +144,7 @@ export default function Gallery() {
     >
       <div
         ref={stage}
-        className="relative mx-auto h-[min(82svh,860px)] w-full [perspective:1400px] max-md:h-[78svh]"
+        className="relative mx-auto h-[min(82svh,860px)] w-full [mask-image:linear-gradient(to_bottom,#000_78%,transparent)] [perspective:1400px] max-md:h-[78svh]"
         onPointerEnter={(e) => (hoverRef.current = e.pointerType === 'mouse')}
         onPointerLeave={() => (hoverRef.current = false)}
       >
@@ -172,7 +170,7 @@ export default function Gallery() {
                     data-cursor="view"
                     aria-label={`${G.open}: ${s.caption}`}
                     onClick={() => setOpen(si)}
-                    className="gallery-tile absolute left-0 top-0 aspect-[4/5] h-full overflow-hidden rounded-[20px] bg-ember"
+                    className="gallery-tile absolute left-0 top-0 aspect-[4/5] h-full overflow-hidden rounded-[20px] bg-ink-2"
                   >
                     <img
                       src={s.src}
@@ -189,12 +187,19 @@ export default function Gallery() {
           ))}
         </div>
 
+        {/* края ленты приглушены (≈ brightness .7), центр ярче */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-[5]"
+          style={{ background: 'linear-gradient(90deg, rgba(11,9,8,.62), rgba(11,9,8,0) 30%, rgba(11,9,8,0) 70%, rgba(11,9,8,.62))' }}
+        />
+
         {/* заголовок поверх, по центру; ink-подложка держит читаемость над кадрами */}
         <div className="pointer-events-none absolute inset-0 z-10 grid place-items-center">
           <div
             aria-hidden
             className="absolute inset-0"
-            style={{ background: 'radial-gradient(52% 44% at 50% 50%, rgba(11,9,8,.92), rgba(11,9,8,.55) 55%, transparent 80%)' }}
+            style={{ background: 'radial-gradient(48% 40% at 50% 50%, rgba(11,9,8,.86), rgba(11,9,8,.5) 55%, transparent 82%)' }}
           />
           <div className="relative text-center">
             <SectionTitle lines={ui.titles.gallery} className="text-center" />
@@ -210,7 +215,7 @@ export default function Gallery() {
           type="button"
           onClick={() => setPaused((p) => !p)}
           aria-pressed={paused}
-          className="t-micro link-draw absolute bottom-6 left-[var(--gutter-x)] z-20 inline-flex min-h-11 items-center text-bone-dim hover:text-bone"
+          className="t-micro link-draw absolute bottom-6 left-1/2 z-20 -translate-x-1/2 inline-flex min-h-11 items-center text-bone-dim hover:text-bone"
         >
           {paused ? ui.motion.play : ui.motion.pause}
         </button>

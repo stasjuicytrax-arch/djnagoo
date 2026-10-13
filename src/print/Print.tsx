@@ -187,7 +187,7 @@ export default function Print() {
             />
           ))}
           <div className="absolute left-1/2 top-1/2 size-[260px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full bg-ember">
-            <img src={assetUrl(press04.src)} alt="" className="size-full object-cover mix-blend-multiply grayscale contrast-125" />
+            <img src={assetUrl(press04.src)} alt="" className="size-full object-cover" />
           </div>
           {genres.map((g, i) => {
             const ring = i < 3 ? 0 : i < 6 ? 1 : 2
@@ -305,8 +305,8 @@ export default function Print() {
           {[...press.map((p) => p.src), ...tour.items.slice(0, 12).map((t) => t.poster), ...videos.map((v) => v.poster)]
             .slice(0, 24)
             .map((src, i) => (
-              <li key={src + i} className="overflow-hidden rounded-[20px] bg-ember">
-                <img src={assetUrl(src)} alt="" className="size-full object-cover mix-blend-multiply grayscale contrast-110" style={{ filter: 'grayscale(1) contrast(1.1) brightness(1.3)' }} />
+              <li key={src + i} className="overflow-hidden rounded-[20px] bg-ink-2">
+                <img src={assetUrl(src)} alt="" className="size-full object-cover" />
               </li>
             ))}
         </ul>
