@@ -21,6 +21,23 @@
     ]
   },
 
+  "ui": {
+    "_note": "Служебные подписи интерфейса (рамка, навигация, CTA). Весь UI-текст живёт здесь.",
+    "nav": [
+      { "id": "sound", "label": "Sound" },
+      { "id": "video", "label": "Video" },
+      { "id": "tour", "label": "Tour" },
+      { "id": "gallery", "label": "Gallery" },
+      { "id": "booking", "label": "Book" }
+    ],
+    "sections": ["hero", "manifest", "stats", "sound", "video", "timeline", "tour", "gallery", "booking"],
+    "live": "Live from",
+    "floatingCta": "Book Nagoo",
+    "scroll": "Scroll",
+    "cursor": { "play": "Sound on", "view": "View", "drag": "Drag" },
+    "copied": "Copied"
+  },
+
   "bio": {
     "_source": "Старый PromoKit (1.jpg). Word-документ BIO и пресс-релиз в рабочей папке НЕ найдены — при их появлении заменить/дополнить этот блок.",
     "needsConfirm": true,

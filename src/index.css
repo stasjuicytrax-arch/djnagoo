@@ -130,3 +130,25 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* Текстовая ссылка: подчёркивание 1px рисуется слева направо (DESIGN.md §6) */
+.link-draw {
+  position: relative;
+  display: inline-block;
+}
+.link-draw::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-s) var(--ease-out);
+}
+.link-draw:hover::after,
+.link-draw:focus-visible::after {
+  transform: scaleX(1);
+}
