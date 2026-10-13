@@ -56,7 +56,7 @@ export default function FloatingCta() {
       onPointerLeave={onLeave}
       tabIndex={show ? 0 : -1}
       aria-hidden={!show}
-      className="t-micro fixed bottom-16 right-[var(--gutter-x)] z-40 grid size-[72px] place-items-center rounded-full bg-ember text-center leading-tight text-ink hover:bg-ember-hot"
+      className="t-micro fixed bottom-[calc(64px+env(safe-area-inset-bottom))] right-[var(--gutter-x)] z-40 grid size-[72px] place-items-center rounded-full bg-ember text-center leading-tight text-ink hover:bg-ember-hot cta-circle"
       style={{
         opacity: show ? 1 : 0,
         scale: show ? '1' : '0.6',

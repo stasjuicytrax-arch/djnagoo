@@ -6,8 +6,8 @@ export default function Grain() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none fixed inset-0 z-50"
-      style={{ backgroundImage: noise, opacity: 0.07, mixBlendMode: 'overlay' }}
+      className="pointer-events-none fixed inset-0 z-50 opacity-[.07] mix-blend-overlay max-md:opacity-[.05] max-md:mix-blend-normal"
+      style={{ backgroundImage: noise }}
     />
   )
 }

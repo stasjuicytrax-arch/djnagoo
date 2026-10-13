@@ -56,7 +56,7 @@ export default function Cursor() {
         style={{
           width: 8,
           height: 8,
-          transform: kind ? 'translate(-32px,-32px) scale(9)' : 'none',
+          transform: kind ? 'scale(9)' : 'none',
           transition: 'transform var(--dur-s) var(--ease-out)',
         }}
       />
