@@ -12,9 +12,9 @@ const byId = (id: string) => videos.find((v) => v.id === id)!
 
 /** Порядок по ТЗ: v03 (ч/б атмосфера) · v01 (главный, крупный) · v02 (толпа, ≤360px, под зерном). */
 const ORDER: { v: V; main?: boolean; grain?: boolean; from: number; tilt: number; lift: string }[] = [
-  { v: byId('v03'), from: 7, tilt: -3, lift: 'md:mb-[9vw]' },
+  { v: byId('v03'), from: 7, tilt: -3, lift: 'md:mb-[4vw]' },
   { v: byId('v01'), main: true, from: 11, tilt: 0, lift: '' },
-  { v: byId('v02'), grain: true, from: 17, tilt: 3, lift: 'md:mb-[3vw]' },
+  { v: byId('v02'), grain: true, from: 17, tilt: 3, lift: 'md:mb-[4vw]' },
 ]
 
 const Icon = {
@@ -294,11 +294,11 @@ export default function Video() {
       style={{ paddingBlock: 'var(--space-section) clamp(80px, 10vw, 160px)' }}
     >
       <div className="px-[var(--gutter-x)]">
-        <SectionTitle lines={ui.titles.video} />
+        <SectionTitle lines={ui.titles.video} className="text-center" />
       </div>
 
       <div
-        className="mt-[var(--space-block)] flex snap-x snap-mandatory items-end gap-[var(--col-gap)] overflow-x-auto px-[var(--gutter-x)] [scrollbar-width:none] md:snap-none md:justify-end md:overflow-visible"
+        className="mt-[var(--space-block)] flex snap-x snap-mandatory items-end gap-[var(--col-gap)] overflow-x-auto px-[var(--gutter-x)] [scrollbar-width:none] md:snap-none md:justify-center md:overflow-visible"
         onPointerLeave={() => setActive(null)}
       >
         {ORDER.map((it) => (

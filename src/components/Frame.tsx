@@ -39,6 +39,40 @@ function readCorners(): Corners {
   }
 }
 
+/**
+ * Какие углы рамки сейчас лежат под крупным заголовком (h1/h2): их прячем (fade),
+ * чтобы логотип не торчал из-под «L I V E.» и меню не перечёркивало буквы.
+ */
+function readCovered(): Corners {
+  const vw = window.innerWidth
+  const vh = window.innerHeight
+  const zones = {
+    tl: { l: 0, r: 220, t: 0, b: 72 },
+    tr: { l: vw - 560, r: vw, t: 0, b: 78 },
+    bl: { l: 0, r: 300, t: vh - 64, b: vh },
+    br: { l: vw - 220, r: vw, t: vh - 84, b: vh },
+  } as const
+  const hit: Corners = { tl: false, tr: false, bl: false, br: false }
+  document.querySelectorAll('h1, h2').forEach((h) => {
+    const rb = h.getBoundingClientRect()
+    if (rb.bottom < 0 || rb.top > vh) return
+    const range = document.createRange()
+    range.selectNodeContents(h)
+    const rects = [...range.getClientRects()]
+    for (const r of rects) {
+      if (r.width < 4 || r.height < 4) continue
+      for (const k of ['tl', 'tr', 'bl', 'br'] as const) {
+        const z = zones[k]
+        // em-блок шире видимых глифов: учитываем ~64% высоты (капитель)
+        const top = r.top + r.height * 0.18
+        const bottom = r.bottom - r.height * 0.18
+        if (r.right > z.l && r.left < z.r && bottom > z.t && top < z.b) hit[k] = true
+      }
+    }
+  })
+  return hit
+}
+
 const same = (a: Corners, b: Corners) => a.tl === b.tl && a.tr === b.tr && a.bl === b.bl && a.br === b.br
 const ink = (on: boolean) => (on ? 'text-ink' : 'text-bone')
 
@@ -47,12 +81,15 @@ export default function Frame() {
   const index = useActiveSection()
   const bar = useRef<HTMLSpanElement>(null)
   const [c, setC] = useState<Corners>(BONE_ALL)
+  const [cov, setCov] = useState<Corners>(BONE_ALL)
 
   useEffect(() => {
     let raf = 0
     const update = () => {
       const next = readCorners()
       setC((prev) => (same(prev, next) ? prev : next))
+      const cov = readCovered()
+      setCov((prev) => (prev.tl === cov.tl && prev.tr === cov.tr && prev.bl === cov.bl && prev.br === cov.br ? prev : cov))
       const max = document.documentElement.scrollHeight - window.innerHeight
       const p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0
       if (bar.current) bar.current.style.transform = `scaleX(${p})`
@@ -107,7 +144,7 @@ export default function Frame() {
           aria-label={`${artist.name}: back to top`}
           className={`pointer-events-auto relative -my-4 block w-[88px] py-4 transition-opacity duration-[var(--dur-s)] md:w-24 before:absolute before:-inset-x-3 before:inset-y-0 before:content-[''] ${tone} ${ink(c.tl)} ${
             inHero ? 'max-md:pointer-events-none max-md:opacity-0' : ''
-          }`}
+          } ${cov.tl ? '!pointer-events-none !opacity-0' : ''}`}
         >
           <Logo className="block w-full" />
         </a>
@@ -118,7 +155,7 @@ export default function Frame() {
             c.tr ? 'bg-bone/55' : 'bg-ink/50'
           } max-md:gap-0 max-md:bg-transparent max-md:p-0 max-md:backdrop-blur-none ${
             inHero ? '' : 'max-md:invisible'
-          }`}
+          } transition-opacity ${cov.tr ? 'pointer-events-none opacity-0' : ''}`}
         >
           {ui.nav.map((n, i) => {
             const last = i === ui.nav.length - 1
@@ -141,14 +178,14 @@ export default function Frame() {
       </div>
 
       {/* ↙ live */}
-      <p className={`absolute bottom-[max(20px,env(safe-area-inset-bottom))] left-[var(--gutter-x)] flex items-center gap-2 ${tone} ${ink(c.bl)}`}>
+      <p className={`absolute bottom-[max(20px,env(safe-area-inset-bottom))] left-[var(--gutter-x)] flex items-center gap-2 transition-opacity ${tone} ${ink(c.bl)} ${cov.bl ? 'opacity-0' : ''}`}>
         <span aria-hidden className="inline-block size-2 rounded-full bg-ember" />
         {ui.live} {artist.base}
       </p>
 
       {/* ↘ номер секции + прогресс */}
       <div
-        className={`absolute bottom-[max(20px,env(safe-area-inset-bottom))] right-[var(--gutter-x)] flex flex-col items-end gap-2 ${tone} ${ink(c.br)}`}
+        className={`absolute bottom-[max(20px,env(safe-area-inset-bottom))] right-[var(--gutter-x)] flex flex-col items-end gap-2 transition-opacity ${tone} ${ink(c.br)} ${cov.br ? 'opacity-0' : ''}`}
       >
         <p className="tabular-nums" aria-label={`Section ${index + 1} of ${ui.sections.length}`}>
           {pad(index + 1)} / {pad(ui.sections.length)}
