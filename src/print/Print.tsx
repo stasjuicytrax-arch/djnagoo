@@ -249,8 +249,8 @@ export default function Print() {
             return (
               <li
                 key={`${s.from}-${i}`}
-                className="absolute w-[215px]"
-                style={{ left: i * 226, ...(up ? { bottom: 1080 - 610 + 34 } : { top: 610 + 34 }) }}
+                className="absolute w-[190px]"
+                style={{ left: i * (1808 / timeline.length), ...(up ? { bottom: 1080 - 610 + 34 } : { top: 610 + 34 }) }}
               >
                 <span
                   aria-hidden

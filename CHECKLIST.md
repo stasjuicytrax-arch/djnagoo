@@ -48,3 +48,14 @@
 - **Word-документ BIO** — в папке нет.
 - **Пресс-релиз** — в папке нет.
 - Даты 2024–2026 (архив обрывается на ноябре 2023).
+
+## Правка клиента: таймлайн и резидентства
+
+| Что | Было | Стало |
+|---|---|---|
+| 2009–2011 | Resident DJ, Buddha Bar, Egypt | Freelance DJ & Marketing Manager, Buddha Bar |
+| 2024–2025 | The Foundry (резидент с ноября 2024) | The Foundry, Bahrain, `to: 2025` |
+| 2025 — NOW | нет | Haus, Bahrain, Resident DJ (`needsConfirm`: роль уточняется) |
+| Резидентства | 5 | **4**: Lomonosov Club, Tommy Lee Club, The Foundry, Haus |
+| bio.short | residencies in Egypt, Russia and Bahrain | residencies in Russia and Bahrain |
+| Hurghada | гиги в туре | остаются (это гиги, не резидентство) |

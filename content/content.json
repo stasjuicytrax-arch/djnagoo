@@ -89,19 +89,20 @@
   "bio": {
     "_source": "Старый PromoKit (1.jpg). Word-документ BIO и пресс-релиз в рабочей папке НЕ найдены — при их появлении заменить/дополнить этот блок.",
     "needsConfirm": true,
-    "short": "DJ & producer behind the decks since 2005. From freelance sets at Ministry of Sound, Hed Kandi and Buddha Bar to residencies in Egypt, Russia and Bahrain.",
+    "short": "DJ & producer behind the decks since 2005. From freelance sets at Ministry of Sound, Hed Kandi and Buddha Bar to residencies in Russia and Bahrain.",
     "long": null
   },
 
   "timeline": [
     { "from": 2005, "to": 2009, "title": "Freelance", "detail": "Ministry of Sound, Hed Kandi, Buddha Bar and others" },
-    { "from": 2009, "to": 2011, "title": "Resident DJ", "venue": "Buddha Bar", "place": "Egypt" },
+    { "from": 2009, "to": 2011, "title": "Freelance DJ & Marketing Manager", "venue": "Buddha Bar" },
     { "from": 2011, "to": 2016, "title": "Freelance DJ" },
     { "from": 2016, "to": 2022, "title": "Resident DJ", "venue": "Lomonosov Club", "place": "Russia" },
     { "from": 2018, "to": 2018, "title": "Best DJ Saint Petersburg", "kind": "award" },
     { "from": 2022, "to": 2023, "title": "Resident DJ", "venue": "Tommy Lee Club", "place": "Saint Petersburg, Russia" },
     { "from": 2023, "to": null, "title": "Freelance DJ" },
-    { "from": 2024, "to": null, "title": "Resident DJ", "venue": "The Foundry", "place": "Bahrain", "detail": "since November 2024" }
+    { "from": 2024, "to": 2025, "title": "Resident DJ", "venue": "The Foundry", "place": "Bahrain", "detail": "since November 2024" },
+    { "from": 2025, "to": null, "title": "Resident DJ", "venue": "Haus", "place": "Bahrain", "needsConfirm": true, "confirmWhat": "роль в Haus (пока Resident DJ)" }
   ],
 
   "genres": [
@@ -116,13 +117,12 @@
   ],
 
   "stats": [
-    { "value": 2005, "label": "years behind the decks", "format": "yearsSince" },
-    { "value": 5, "label": "residencies", "suffix": "" },
-    { "value": 16, "label": "gigs documented", "suffix": "" },
-    { "value": 5, "label": "cities · 4 countries", "suffix": "" },
-    { "value": 8, "label": "genres in the set", "suffix": "" }
+    { "value": 2005, "label": "years", "format": "yearsSince" },
+    { "value": 4, "label": "residencies" },
+    { "value": 16, "label": "nights" },
+    { "value": 4, "label": "countries" }
   ],
-  "_statsNote": "Цифры посчитаны из промокита и афиш. Годы стажа считать динамически: currentYear − 2005. Если у артиста есть сильнее цифры (кол-во стран, стримы, подписчики) — заменить.",
+  "_statsNote": "Годы стажа считать динамически: currentYear − 2005. Резидентства: Lomonosov Club, Tommy Lee Club, The Foundry, Haus (4). Страны тура: Bahrain, Egypt, Russia, Oman (4). Жанры в Stats не показываем (они в Sound).",
 
   "tour": {
     "_note": "ВСЕ 16 афиш из папки Afisha. Порядок — хронологический. date=null → дата на афише не указана, месяц взят из даты файла (needsConfirm).",
