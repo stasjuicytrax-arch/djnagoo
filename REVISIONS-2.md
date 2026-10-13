@@ -10,7 +10,7 @@
 | Accessibility / Best practices / SEO | 100 / 100 / 100 | 100 / 100 / 100 |
 | LCP / TBT / CLS | 3.9 s / 80 ms / 0.018 | 0.7 s / 0 ms / 0.056 |
 
-Прогон страницы по всей длине на 1440, 1920, 390: ошибок консоли нет, горизонтального скролла нет, `grep g13nagoo` по репозиторию = 0.
+Прогон страницы по всей длине на 1440, 1920, 390: ошибок консоли нет, горизонтального скролла нет, поиск прежнего хэндла по репозиторию даёт 0 совпадений.
 
 ## R2-1. Instagram
 - **Сделано:** `@dj.nagoo`, `https://instagram.com/dj.nagoo` (без UTM). Заменено в content.json (Booking, /print и OG берут из него), README и документах. Старый хэндл в репозитории: 0 вхождений.
@@ -44,7 +44,7 @@
 - **Проверить глазами:** живой скролл на 390 (тёмный провал между последним рядом афиш и заголовком BOOK NAGOO не должен казаться «пустым»).
 
 ## R2-9. Блок Stats убран полностью
-- **Сделано:** удалены компонент `Stats.tsx`, `.stats-bg`, отдельная ленивая секция и слайд /print. Нумерация рамки теперь `NN / 08` (из `ui.sections`). Факты перенесены в Manifest одной mono-строкой «21 YEARS · 4 RESIDENCIES · 5 COUNTRIES · 10 CITIES» (`factsLine()`, годы от 2005, страны/города из `playedIn`); «DJ since 2005» из highlights убран. TZ.md §4, DESIGN.md §5.2, CHECKLIST.md, DECISIONS.md обновлены. Метрики Lighthouse выше сняты до R2-9.
+- **Сделано:** удалены компонент `Stats.tsx`, `.stats-bg`, отдельная ленивая секция и слайд /print. Нумерация рамки теперь `NN / 08` (из `ui.sections`). Факты перенесены в Manifest одной mono-строкой «21 YEARS · 4 RESIDENCIES · 5 COUNTRIES · 10 CITIES» (`factsLine()`, годы от 2005, страны/города из `playedIn`); «DJ since 2005» из highlights убран. TZ.md §4, DESIGN.md §5.2, CHECKLIST.md, DECISIONS.md обновлены. Lighthouse после R2-9: mobile 85, desktop 99 (TBT 60 ms / 0 ms, CLS 0.018 / 0.057).
 - **Проверить глазами:** стык Manifest (bone) → Sound (ink), смена цвета углов рамки.
 
 ## Блокеры
