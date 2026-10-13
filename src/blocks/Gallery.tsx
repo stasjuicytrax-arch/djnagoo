@@ -144,7 +144,7 @@ export default function Gallery() {
     >
       <div
         ref={stage}
-        className="relative mx-auto h-[min(82svh,860px)] w-full [mask-image:linear-gradient(to_bottom,#000_78%,transparent)] [perspective:1400px] max-md:h-[78svh]"
+        className="relative mx-auto h-[min(82svh,860px)] w-full [mask-image:linear-gradient(to_bottom,#000_60%,rgba(0,0,0,0.972)_64.0%,rgba(0,0,0,0.896)_68.0%,rgba(0,0,0,0.784)_72.0%,rgba(0,0,0,0.648)_76.0%,rgba(0,0,0,0.500)_80.0%,rgba(0,0,0,0.352)_84.0%,rgba(0,0,0,0.216)_88.0%,rgba(0,0,0,0.104)_92.0%,rgba(0,0,0,0.028)_96.0%,rgba(0,0,0,0.000)_100.0%)] [perspective:1400px] max-md:h-[78svh]"
         onPointerEnter={(e) => (hoverRef.current = e.pointerType === 'mouse')}
         onPointerLeave={() => (hoverRef.current = false)}
       >

@@ -64,29 +64,36 @@ void main(){
   vec3 ember = vec3(0.965, 0.396, 0.149);
   vec3 hot = vec3(1.0, 0.54, 0.24);
 
-  float k = smoothstep(0.22, 0.85, haze);
-  vec3 col = mix(ink, crimson, k * 0.85);
-  col = mix(col, ember, smoothstep(0.55, 1.1, haze + near * 0.35) * 0.9);
-  col += hot * pow(max(haze - 0.78, 0.0), 2.0) * 1.6 * smoothstep(0.25, 0.7, uv.y);
+  // тёплое ядро за заголовком: центр ember/hot, края crimson, дымка лепит форму
+  vec2 cq = (uv - vec2(0.5, 0.6)) * vec2(0.8, 1.25);
+  float core = exp(-dot(cq, cq) * 3.4);
+  float heat = haze * 0.78 + core * 0.95 + near * 0.3;
+  vec3 col = mix(ink, crimson, smoothstep(0.18, 0.62, heat));
+  col = mix(col, ember, smoothstep(0.55, 1.0, heat));
+  col = mix(col, hot, smoothstep(0.95, 1.45, heat) * 0.55);
 
-  // виньетка и зерно
-  float vig = smoothstep(1.25, 0.25, distance(uv, vec2(0.5)));
-  col *= mix(0.35, 1.0, vig);
-  // нижняя зона (контакты): темнее и без горячих бликов, чтобы текст держал контраст
-  col *= mix(0.72, 1.0, smoothstep(0.05, 0.62, uv.y));
-  col += (hash(gl_FragCoord.xy + uTime) - 0.5) * 0.06;
+  // виньетка (мягкая) и нижняя зона под контакты чуть темнее
+  float vig = smoothstep(1.3, 0.3, distance(uv, vec2(0.5)));
+  col *= mix(0.55, 1.0, vig);
+  col *= mix(0.8, 1.0, smoothstep(0.05, 0.55, uv.y));
   col *= mix(0.12, 1.0, uGain);
-  o = vec4(max(col, 0.0), 1.0);
+  // зерно + треугольный дизеринг ±1/255 против бэндинга на градиенте
+  col += (hash(gl_FragCoord.xy + uTime) - 0.5) * 0.03;
+  col += (hash(gl_FragCoord.xy + 17.3) + hash(gl_FragCoord.xy + 91.7) - 1.0) / 255.0;
+  o = vec4(clamp(col, 0.0, 1.0), 1.0);
 }`
 
 /** Фон Booking. Без WebGL2 или при reduced-motion остаётся статичный градиент (CSS). */
 export default function HazeCanvas({
   className = '',
   gain,
+  onFallback,
 }: {
   className?: string
   /** ref со значением 0..1: яркость дымки, обновляется снаружи по скроллу */
   gain?: { current: number }
+  /** вызывается, если на слабом телефоне fps просел и шейдер отключён */
+  onFallback?: () => void
 }) {
   const ref = useRef<HTMLCanvasElement>(null)
 
@@ -130,8 +137,8 @@ export default function HazeCanvas({
     }
 
     const mobile = window.matchMedia('(max-width: 767px)').matches
-    // шейдеры в половинном разрешении на mobile (DESIGN §9), dpr не выше 1.25 на desktop
-    const scale = mobile ? 0.5 : 0.6
+    // mobile: полный DPR (иначе бэндинг от апскейла), desktop: 0.6; при просадке fps — шаг вниз, затем CSS-фолбэк
+    let scale = mobile ? Math.min(window.devicePixelRatio || 1, 2) : 0.6
     const resize = () => {
       const w = Math.max(2, Math.floor(canvas.clientWidth * scale))
       const h = Math.max(2, Math.floor(canvas.clientHeight * scale))
@@ -184,9 +191,39 @@ export default function HazeCanvas({
     io.observe(canvas)
 
     let raf = 0
+    let slowN = 0
+    let frames = 0
+    let last = 0
+    let tier = 0
     const frame = () => {
       raf = requestAnimationFrame(frame)
-      if (!visible) return
+      if (!visible) {
+        last = 0
+        return
+      }
+      const tn = performance.now()
+      if (mobile && !calm && last) {
+        const dt = tn - last
+        frames++
+        if (frames > 20) slowN += dt > 22 ? 1 : 0
+        if (frames === 80) {
+          if (slowN > 30) {
+            tier++
+            if (tier === 1) {
+              scale = 0.5
+              resize()
+            } else {
+              cancelAnimationFrame(raf)
+              canvas.style.opacity = '0'
+              onFallback?.()
+              return
+            }
+          }
+          frames = 0
+          slowN = 0
+        }
+      }
+      last = tn
       mouse.x += (mouse.tx - mouse.x) * 0.06
       mouse.y += (mouse.ty - mouse.y) * 0.06
       mouse.pres += (mouse.tpres - mouse.pres) * 0.05

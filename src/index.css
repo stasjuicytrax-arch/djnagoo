@@ -366,7 +366,7 @@ body {
   --my: 0%;
   position: relative;
   border-radius: 32px;
-  background: rgba(237, 234, 228, 0.06);
+  background: linear-gradient(rgba(237, 234, 228, 0.06), rgba(237, 234, 228, 0.06)), rgba(14, 10, 9, 0.42);
   -webkit-backdrop-filter: blur(28px) saturate(180%);
   backdrop-filter: blur(28px) saturate(180%);
   /* объём: свет по верхнему краю и мягкая внутренняя тень у нижнего */
@@ -428,4 +428,21 @@ body {
     -webkit-backdrop-filter: blur(22px) saturate(180%);
     backdrop-filter: blur(22px) saturate(180%);
   }
+}
+
+/* Фолбэк дымки Booking на слабых телефонах: два радиальных градиента того же цвета, медленный дрейф */
+.haze-css {
+  background-image:
+    radial-gradient(60% 50% at 50% 60%, rgba(255,138,61,.9), rgba(246,101,38,.55) 40%, transparent 75%),
+    radial-gradient(90% 70% at 30% 70%, rgba(146,2,40,.85), transparent 70%),
+    radial-gradient(80% 60% at 75% 45%, rgba(146,2,40,.7), transparent 70%);
+  background-size: 140% 140%, 120% 120%, 120% 120%;
+  animation: haze-drift 18s ease-in-out infinite alternate;
+}
+@keyframes haze-drift {
+  from { background-position: 40% 55%, 0% 100%, 100% 0%; }
+  to { background-position: 60% 45%, 30% 70%, 70% 30%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .haze-css { animation: none; }
 }

@@ -30,6 +30,16 @@ const CopyIcon = (
   </svg>
 )
 
+/** верх дымки: S-кривая (smoothstep) на min(58vh, 600px), низ уходит в ink */
+const HAZE_MASK = (() => {
+  const L = 'min(58vh, 600px)'
+  const stops = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1].map((f) => {
+    const a = f * f * (3 - 2 * f)
+    return `rgba(0,0,0,${a.toFixed(3)}) calc(${L} * ${f})`
+  })
+  return `linear-gradient(to bottom, ${stops.join(', ')}, #000 calc(100% - 24vh), transparent 100%)`
+})()
+
 /**
  * 09 · Booking + Footer. Фон: дымка WebGL (velvet-haze в палитре crimson/ember).
  * Контакты: ссылка открывает действие, отдельная кнопка копирует в буфер с тостом COPIED.
@@ -44,6 +54,7 @@ export default function Booking() {
   const gain = useRef(0)
   const glow = useRef<HTMLDivElement>(null)
   const [refract, setRefract] = useState(false)
+  const [cssHaze, setCssHaze] = useState(false)
 
   // «рассвет»: на входе секции почти темно, к моменту BOOK NAGOO в центре — полная яркость
   useEffect(() => {
@@ -52,7 +63,9 @@ export default function Booking() {
     const update = () => {
       const top = el.getBoundingClientRect().top
       const vh = window.innerHeight
-      gain.current = Math.min(1, Math.max(0, (vh - top) / (vh * 0.9)))
+      // 0 при входе секции, 1 когда её верх поднялся до 40% высоты окна (на конце страницы всегда 1)
+      const x = Math.min(1, Math.max(0, (vh * 0.95 - top) / (vh * 0.55)))
+      gain.current = x * x * (3 - 2 * x)
       if (glow.current) glow.current.style.opacity = String(gain.current)
     }
     update()
@@ -126,22 +139,21 @@ export default function Booking() {
         aria-hidden
         className="absolute inset-0 -z-10"
         style={{
-          maskImage:
-            'linear-gradient(to bottom, transparent 0, #000 min(38vh, 380px), #000 calc(100% - 24vh), transparent 100%)',
-          WebkitMaskImage:
-            'linear-gradient(to bottom, transparent 0, #000 min(38vh, 380px), #000 calc(100% - 24vh), transparent 100%)',
+          maskImage: HAZE_MASK,
+          WebkitMaskImage: HAZE_MASK,
         }}
       >
         <div
           ref={glow}
-          className="absolute inset-0"
+          className={`absolute inset-0 ${cssHaze ? 'haze-css' : ''}`}
           style={{
-            backgroundImage:
-              'radial-gradient(75% 55% at 50% 100%, rgba(246,101,38,.5), transparent 72%), var(--grad-glow)',
+            backgroundImage: cssHaze
+              ? undefined
+              : 'radial-gradient(75% 55% at 50% 100%, rgba(246,101,38,.5), transparent 72%), var(--grad-glow)',
             opacity: 0,
           }}
         />
-        <HazeCanvas gain={gain} />
+        <HazeCanvas gain={gain} onFallback={() => setCssHaze(true)} />
       </div>
 
       <div
