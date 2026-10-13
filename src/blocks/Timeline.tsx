@@ -46,6 +46,8 @@ function StageCard({ s, i }: { s: Stage; i: number }) {
   )
 }
 
+const awardNode = (p: { nodes: { x: number; award: boolean }[] }) => p.nodes.find((n) => n.award)
+
 /**
  * 05 · Timeline. Desktop: горизонтальная лента в sticky-экране (высота секции = путь ленты + экран,
  * без JS-pin). Линия с бегущим градиентом (концепт 21st gradient-tracing) рисуется по скроллу,
@@ -56,6 +58,9 @@ export default function Timeline() {
   const track = useRef<HTMLUListElement>(null)
   const line = useRef<SVGPathElement>(null)
   const head = useRef<SVGCircleElement>(null)
+  const glow = useRef<SVGCircleElement>(null)
+  const tail = useRef<SVGGElement>(null)
+  const flash = useRef<SVGCircleElement>(null)
   const [outerH, setOuterH] = useState<number | null>(null)
   const [path, setPath] = useState<{ d: string; w: number; h: number; nodes: { x: number; award: boolean }[] } | null>(null)
   const calm = useMemo(() => reducedMotion(), [])
@@ -114,6 +119,21 @@ export default function Timeline() {
       line.current.style.strokeDasharray = String(len)
       line.current.style.strokeDashoffset = String(len)
     }
+    // длина пути в точке награды: первая точка, где x достигает узла 2018 (дальше петля)
+    const aw = awardNode(path)
+    let awardLen = Infinity
+    if (aw && line.current) {
+      for (let l = 0; l <= len; l += 3) {
+        if (line.current.getPointAtLength(l).x >= aw.x - 0.5) {
+          awardLen = l
+          break
+        }
+      }
+    }
+    const SEG = 10
+    const TAIL_PX = 150
+    const segs = tail.current ? [...tail.current.querySelectorAll('path')] : []
+    let flashed = false
     const ctx = gsap.context(() => {
       gsap.to(tr, {
         x: () => -(tr.scrollWidth - window.innerWidth),
@@ -132,6 +152,32 @@ export default function Timeline() {
               head.current.setAttribute('cx', String(pt.x))
               head.current.setAttribute('opacity', p > 0.005 ? '1' : '0')
               head.current.setAttribute('cy', String(pt.y))
+              if (glow.current) {
+                glow.current.setAttribute('cx', String(pt.x))
+                glow.current.setAttribute('cy', String(pt.y))
+                glow.current.setAttribute('opacity', p > 0.005 ? '1' : '0')
+              }
+              // короткий хвост: цепочка отрезков по пути за головкой, затухает к прозрачности
+              const at = len * Math.min(1, p * 1.04 + 0.02)
+              const step = TAIL_PX / SEG
+              let a = pt
+              segs.forEach((s, k) => {
+                const b = line.current!.getPointAtLength(Math.max(0, at - (k + 1) * step))
+                s.setAttribute('d', 'M ' + a.x + ' ' + a.y + ' L ' + b.x + ' ' + b.y)
+                a = b
+              })
+              if (tail.current) tail.current.setAttribute('opacity', p > 0.005 ? '1' : '0')
+              // вспышка на петле 2018 при прохождении головкой узла награды
+              if (at >= awardLen && !flashed) {
+                flashed = true
+                flash.current?.animate(
+                  [
+                    { opacity: 0.95, transform: 'scale(0.4)' },
+                    { opacity: 0, transform: 'scale(3.4)' },
+                  ],
+                  { duration: 700, easing: 'cubic-bezier(0.16,1,0.3,1)' },
+                )
+              } else if (at < awardLen - 40) flashed = false
             }
           },
         },
@@ -174,6 +220,11 @@ export default function Timeline() {
               viewBox={`0 0 ${path.w} ${path.h}`}
               >
               <defs>
+                <radialGradient id="tl-comet">
+                  <stop offset="0" stopColor="#ff8a3d" stopOpacity=".9" />
+                  <stop offset=".45" stopColor="#f66526" stopOpacity=".4" />
+                  <stop offset="1" stopColor="#f66526" stopOpacity="0" />
+                </radialGradient>
                 <linearGradient id="tl-grad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2={path.w} y2="0">
                   <stop offset="0" style={{ stopColor: "var(--crimson)" }} />
                   <stop offset=".38" style={{ stopColor: "var(--red)" }} />
@@ -186,7 +237,33 @@ export default function Timeline() {
               {path.nodes.map((n, k) => (
               <circle key={k} cx={n.x} cy={path.h / 2} r={n.award ? 7 : 4} fill={n.award ? "var(--ember)" : "var(--bone-faint)"} />
             ))}
-            <circle ref={head} r="6" fill="var(--ember)" cx="0" cy={path.h / 2} opacity="0" />
+            {awardNode(path) && (
+              <circle
+                ref={flash}
+                cx={awardNode(path)!.x}
+                cy={path.h / 2}
+                r="18"
+                fill="none"
+                stroke="var(--ember-hot)"
+                strokeWidth="2"
+                opacity="0"
+                style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
+              />
+            )}
+            <g ref={tail} opacity="0">
+              {Array.from({ length: 10 }, (_, k) => (
+                <path
+                  key={k}
+                  fill="none"
+                  stroke="var(--bone)"
+                  strokeLinecap="round"
+                  strokeWidth={3.6 - k * 0.22}
+                  opacity={0.9 - k * 0.085}
+                />
+              ))}
+            </g>
+            <circle ref={glow} r="15" fill="url(#tl-comet)" cx="0" cy={path.h / 2} opacity="0" />
+            <circle ref={head} r="4.5" fill="var(--bone)" cx="0" cy={path.h / 2} opacity="0" />
             </svg>
           )}
           </li>

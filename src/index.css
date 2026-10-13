@@ -435,3 +435,52 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .haze-css { animation: none; }
 }
+
+/* Comet (DESIGN §7): хвост — граница круга с conic-маской, головка — точка со свечением */
+.comet-tail {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  border-radius: 9999px;
+  border: var(--w) solid var(--c);
+  -webkit-mask-image: conic-gradient(from calc(360deg - var(--tail)), transparent 0deg, #000 var(--tail), transparent var(--tail));
+  mask-image: conic-gradient(from calc(360deg - var(--tail)), transparent 0deg, #000 var(--tail), transparent var(--tail));
+}
+.comet-tail.is-ccw {
+  -webkit-mask-image: conic-gradient(from 0deg, #000 0deg, transparent var(--tail), transparent 360deg);
+  mask-image: conic-gradient(from 0deg, #000 0deg, transparent var(--tail), transparent 360deg);
+}
+.comet-tail-soft {
+  border-width: calc(var(--w) * 3.5);
+  opacity: 0.18;
+}
+.comet-head {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--w) / 2);
+  width: 5px;
+  height: 5px;
+  margin: -2.5px 0 0 -2.5px;
+  border-radius: 9999px;
+  background: var(--c);
+  box-shadow:
+    0 0 12px 3px color-mix(in srgb, var(--c) 70%, transparent),
+    0 0 4px 1px var(--c);
+}
+@media (max-width: 767px) {
+  .comet-head {
+    box-shadow:
+      0 0 8px 2px color-mix(in srgb, var(--c) 70%, transparent),
+      0 0 3px 1px var(--c);
+  }
+}
+/* пилюля, мимо которой прошла комета: ember-кант и лёгкое свечение ~400ms */
+.genre-pill[data-lit] {
+  border-color: var(--ember);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--ember) 45%, transparent);
+}
+.genre-pill {
+  transition-property: background-color, color, border-color, box-shadow;
+  transition-duration: var(--dur-xs);
+  transition-timing-function: linear;
+}

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { content, assetUrl } from '@/lib/content'
 import { reducedMotion } from '@/lib/smooth'
 import SectionTitle from '@/components/SectionTitle'
+import Comet from '@/components/Comet'
 
 const { genres, ui, hero } = content
 
@@ -13,6 +14,13 @@ const ORBITS = [
   { d: 0.94, period: 50, dir: 1, take: 3 },
   { d: 0.72, period: 40, dir: -1, take: 3 },
   { d: 0.5, period: 30, dir: 1, take: 2 },
+] as const
+
+/** Кометы: периоды 15/12/9 с = полиритм 3:4:5, свои направления и цвета; на mobile внутренняя скрыта */
+const COMETS = [
+  { orbit: 0, period: 15, dir: 1, color: 'var(--bone)', phase: 20, tail: 80 },
+  { orbit: 1, period: 12, dir: -1, color: 'var(--ember)', phase: 140, tail: 70 },
+  { orbit: 2, period: 9, dir: 1, color: 'var(--red)', phase: 250, tail: 90 },
 ] as const
 
 type Orbit = (typeof ORBITS)[number] & { items: { name: string; angle: number }[] }
@@ -51,7 +59,8 @@ export default function Sound() {
   const disc = useRef<HTMLDivElement>(null)
   const pausedRef = useRef(false)
   pausedRef.current = paused
-  const api = useRef<{ setPaused: (p: boolean) => void } | null>(null)
+  const api = useRef<{ setPaused: (p: boolean) => void; rot: (i: number) => number } | null>(null)
+  const cometEls = useRef<(HTMLDivElement | null)[]>([])
 
   useEffect(() => {
     const root = scene.current
@@ -102,7 +111,17 @@ export default function Sound() {
     root.addEventListener('pointerout', leave)
 
     const setP = (p: boolean) => groups.forEach((g) => g.anims.forEach((a) => (p ? a.pause() : a.play())))
-    api.current = { setPaused: setP }
+    api.current = {
+      setPaused: setP,
+      // текущий угол орбиты (deg) по WAAPI-времени: пилюли едут вместе с кольцом
+      rot: (i) => {
+        const o = ORBITS[i]
+        const a = groups[i]?.anims[0]
+        if (!a) return 0
+        const ms = o.period * 1000
+        return o.dir * 360 * ((Number(a.currentTime ?? 0) % ms) / ms)
+      },
+    }
     // вне экрана — на паузе
     const io = new IntersectionObserver(([e]) => setP(!e.isIntersecting || pausedRef.current), { threshold: 0.05 })
     io.observe(root)
@@ -120,6 +139,53 @@ export default function Sound() {
   useEffect(() => {
     api.current?.setPaused(paused)
   }, [paused])
+
+  // Кометы: свой ход по орбитам; проходя мимо пилюли, подсвечивают её на ~400ms. PAUSE MOTION стопорит всё.
+  useEffect(() => {
+    const root = scene.current
+    if (!root || reducedMotion()) return
+    const mobile = window.matchMedia('(max-width: 767px)').matches
+    const pills = ORBITS.map((_, i) => [...root.querySelectorAll<HTMLElement>('[data-orbit="' + i + '"] .genre-pill')])
+    const litUntil = new Map<HTMLElement, number>()
+    let t = 0
+    let prev = performance.now()
+    let visible = true
+    let raf = 0
+    const io = new IntersectionObserver(([e]) => (visible = e.isIntersecting), { threshold: 0.05 })
+    io.observe(root)
+    const frame = (now: number) => {
+      raf = requestAnimationFrame(frame)
+      const dt = Math.min(0.05, (now - prev) / 1000)
+      prev = now
+      if (!visible) return
+      if (!pausedRef.current) t += dt
+      COMETS.forEach((c, i) => {
+        if (mobile && i === 2) return
+        const el = cometEls.current[i]
+        if (!el) return
+        const a = c.phase + c.dir * 360 * (t / c.period)
+        el.style.transform = 'rotate(' + a.toFixed(2) + 'deg)'
+        const head = a - 90 // головка стоит наверху (−90° от оси X)
+        const rot = api.current?.rot(c.orbit) ?? 0
+        const its = orbits[c.orbit].items
+        pills[c.orbit].forEach((p, k) => {
+          const pa = its[k].angle + rot
+          let d = (head - pa) % 360
+          if (d > 180) d -= 360
+          if (d < -180) d += 360
+          if (Math.abs(d) < 9) litUntil.set(p, now + 400)
+          const on = (litUntil.get(p) ?? 0) > now
+          if (on !== p.hasAttribute('data-lit')) p.toggleAttribute('data-lit', on)
+        })
+      })
+    }
+    raf = requestAnimationFrame(frame)
+    return () => {
+      cancelAnimationFrame(raf)
+      io.disconnect()
+      pills.flat().forEach((p) => p.removeAttribute('data-lit'))
+    }
+  }, [orbits])
 
   // Пластинка: ровное вращение 8 с на оборот; хват мышью/пальцем крутит вперёд-назад,
   // после отпускания инерция плавно возвращает базовую скорость. PAUSE MOTION останавливает и диск.
@@ -230,6 +296,32 @@ export default function Sound() {
               ref={scene}
               className="absolute left-0 top-0 aspect-square w-full [container-type:size] max-md:w-[166.7%] max-md:origin-top-left max-md:scale-[0.6]"
             >
+              {/* кометы под пилюлями: пилюля (bg-ink) на мгновение закрывает головку */}
+              {COMETS.map((c, ci) => {
+                const o = ORBITS[c.orbit]
+                return (
+                  <div
+                    key={ci}
+                    className={'pointer-events-none absolute left-1/2 top-1/2 ' + (ci === 2 ? 'max-md:hidden' : '')}
+                    style={{
+                      width: o.d * 100 + 'cqw',
+                      height: o.d * 100 + 'cqw',
+                      marginLeft: (-o.d * 100) / 2 + 'cqw',
+                      marginTop: (-o.d * 100) / 2 + 'cqw',
+                    }}
+                  >
+                    <Comet
+                      ref={(n) => {
+                        cometEls.current[ci] = n
+                      }}
+                      color={c.color}
+                      tail={c.tail}
+                      ccw={c.dir < 0}
+                      angle={c.phase}
+                    />
+                  </div>
+                )
+              })}
               {orbits.map((o, oi) => (
                 <div
                   key={oi}

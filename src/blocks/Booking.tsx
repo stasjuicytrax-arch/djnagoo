@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { content } from '@/lib/content'
-import { scrollToId } from '@/lib/smooth'
+import { reducedMotion, scrollToId } from '@/lib/smooth'
 import SectionTitle from '@/components/SectionTitle'
 import HazeCanvas from '@/components/HazeCanvas'
+import Comet from '@/components/Comet'
 import { whatsappUrl } from '@/lib/contact'
 
 const { contacts, ui, artist } = content
@@ -54,8 +55,46 @@ export default function Booking() {
   const root = useRef<HTMLElement>(null)
   const gain = useRef(0)
   const glow = useRef<HTMLDivElement>(null)
+  const ring = useRef<HTMLDivElement>(null)
   const [refract, setRefract] = useState(false)
   const [cssHaze, setCssHaze] = useState(false)
+
+  // комета вокруг WRITE: 6 с на оборот, на hover быстрее, вне экрана стоит
+  useEffect(() => {
+    const el = ring.current
+    const btn = el?.closest('a')
+    if (!el || !btn || reducedMotion()) return
+    const anim = el.animate([{ transform: 'rotate(40deg)' }, { transform: 'rotate(400deg)' }], {
+      duration: 6000,
+      iterations: Infinity,
+      easing: 'linear',
+    })
+    let rate = 1
+    let target = 1
+    let raf = 0
+    const step = () => {
+      rate += (target - rate) * 0.12
+      anim.updatePlaybackRate(rate)
+      raf = Math.abs(target - rate) > 0.01 ? requestAnimationFrame(step) : 0
+    }
+    const set = (v: number) => {
+      target = v
+      if (!raf) raf = requestAnimationFrame(step)
+    }
+    const enter = () => set(3.2)
+    const leave = () => set(1)
+    btn.addEventListener('pointerenter', enter)
+    btn.addEventListener('pointerleave', leave)
+    const io = new IntersectionObserver(([e]) => (e.isIntersecting ? anim.play() : anim.pause()))
+    io.observe(btn)
+    return () => {
+      btn.removeEventListener('pointerenter', enter)
+      btn.removeEventListener('pointerleave', leave)
+      io.disconnect()
+      cancelAnimationFrame(raf)
+      anim.cancel()
+    }
+  }, [])
 
   // «рассвет»: на входе секции почти темно, к моменту BOOK NAGOO в центре — полная яркость
   useEffect(() => {
@@ -179,9 +218,12 @@ export default function Booking() {
           aria-label={B.writeAria}
           data-cursor="whatsapp"
           data-avoid-cta
-          className="write-cta t-md-cond grid size-[160px] place-items-center rounded-full bg-ember text-center text-ink transition-[background-color,scale] duration-[var(--dur-s)] hover:scale-[1.08] hover:bg-ember-hot"
+          className="write-cta t-md-cond relative grid size-[160px] place-items-center rounded-full bg-ember text-center text-ink transition-[background-color,scale] duration-[var(--dur-s)] hover:scale-[1.08] hover:bg-ember-hot"
           style={{ transitionTimingFunction: 'var(--ease-out)' }}
         >
+          <span aria-hidden className="pointer-events-none absolute -inset-3.5">
+            <Comet ref={ring} color="var(--bone)" tail={120} width={1.5} angle={40} />
+          </span>
           {B.write}
         </a>
 
