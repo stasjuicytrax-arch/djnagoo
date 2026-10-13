@@ -32,6 +32,7 @@
     ],
     "sections": ["hero", "manifest", "stats", "sound", "video", "timeline", "tour", "gallery", "booking"],
     "live": "Live from",
+    "loading": "Loading",
     "floatingCta": "Book Nagoo",
     "scroll": "Scroll",
     "cursor": { "play": "Sound on", "view": "View", "drag": "Drag" },
@@ -122,8 +123,10 @@
   "hero": {
     "main": "assets/hero/hero-main.webp",
     "alt": "assets/hero/hero-alt.webp",
-    "vertical": "assets/hero/hero-vertical.webp",
-    "cutout": "assets/hero/hero-main-cutout.webp"
+    "vertical": "assets/hero/hero-vertical-clean.webp",
+    "_verticalNote": "Чистый 9:16 кроп из Hero 2.jpg. Старый hero-vertical.webp (из nagoo.jpg) содержит запечённый вордмарк, фиолетовую плёнку и чёрный объект сверху справа.",
+    "cutout": "assets/hero/hero-main-cutout.webp",
+    "description": "DJ Nagoo laughing in black sunglasses and a black polo, hand resting on his chin"
   },
 
   "logo": {

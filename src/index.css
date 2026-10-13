@@ -60,6 +60,14 @@ body {
   outline: 2px solid var(--ember);
   outline-offset: 3px;
 }
+/* кольцо в рамке берёт цвет текста угла (ink/bone), а не ember: ember тонет на ember-фото */
+.frame :focus-visible {
+  outline-color: currentColor;
+}
+.cta-circle:focus-visible {
+  outline-color: var(--ink);
+  outline-offset: -5px;
+}
 ::selection {
   background: var(--ember);
   color: var(--ink);
@@ -132,23 +140,72 @@ body {
 }
 
 /* Текстовая ссылка: подчёркивание 1px рисуется слева направо (DESIGN.md §6) */
-.link-draw {
-  position: relative;
-  display: inline-block;
+@layer components {
+  .link-draw {
+    position: relative;
+  }
+  .link-draw::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -3px;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-s) var(--ease-out);
+  }
+  .link-draw:hover::after,
+  .link-draw:focus-visible::after {
+    transform: scaleX(1);
+  }
 }
-.link-draw::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -3px;
-  height: 1px;
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--dur-s) var(--ease-out);
+
+/* 01 · Hero. Ширина DJNAGOO при wdth 125 / wght 900 / -0.04em = 6.37em → 15.6vw вписывает слово в кадр край в край */
+.hero {
+  --wm-size: 15.6vw;
 }
-.link-draw:hover::after,
-.link-draw:focus-visible::after {
-  transform: scaleX(1);
+.hero-wordmark {
+  top: 11%;
+  color: var(--bone);
+}
+@media (max-width: 767px) {
+  .hero {
+    --wm-size: 15.4vw;
+  }
+  .hero-wordmark {
+    top: auto;
+    bottom: 11%;
+  }
+}
+/* вход: wdth 62 → 125 (font-stretch), фото 1.08 → 1 */
+.hero-wordmark > span {
+  font-stretch: 125%;
+  opacity: 1;
+  transition:
+    font-stretch var(--dur-l) var(--ease-out),
+    opacity var(--dur-m) var(--ease-out);
+}
+.hero[data-intro='out'] .hero-wordmark > span {
+  font-stretch: 62%;
+  opacity: 0;
+}
+.hero-photo,
+.hero-cutout img {
+  scale: 1;
+  transition: scale var(--dur-xl) var(--ease-out);
+}
+.hero[data-intro='out'] .hero-photo,
+.hero[data-intro='out'] .hero-cutout img {
+  scale: 1.08;
+}
+.hero-cutout img {
+  opacity: 1;
+  transition:
+    scale var(--dur-xl) var(--ease-out),
+    opacity var(--dur-m) var(--ease-out);
+}
+.hero[data-intro='out'] .hero-cutout img {
+  opacity: 0;
 }
