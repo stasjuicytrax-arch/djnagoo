@@ -11,7 +11,7 @@ E-press-kit (сайт-презентация) DJ NAGOO для букинг-аг�
 | [`CHECKLIST.md`](CHECKLIST.md) | Сверка: 3/3 видео и 16/16 дат задействованы |
 | [`PRODUCT.md`](PRODUCT.md) | Контекст продукта для Impeccable |
 | [`content/content.json`](content/content.json) | Весь контент сайта (био, таймлайн, тур, видео, контакты) |
-| `assets/` | Оптимизированные WebP/MP4: hero, press, posters (16), video (3), logo, references |
+| `public/assets/` | Оптимизированные WebP/MP4: hero, press, posters (16), video (3), logo, references |
 
 ## Старт верстки
 ```bash

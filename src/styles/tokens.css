@@ -1,0 +1,84 @@
+/* DESIGN.md §2 (цвет), §3.2 (типографика), §4–5 (сетка, ритм), §7 (движение) */
+:root {
+  /* База */
+  --ink: #0b0908;
+  --ink-2: #141110;
+  --ink-3: #1e1a18;
+  --line: rgba(237, 234, 228, 0.12);
+
+  /* Закат */
+  --crimson: #920228;
+  --red: #c21a2a;
+  --ember: #f66526;
+  --ember-hot: #ff8a3d;
+
+  /* Свет */
+  --bone: #edeae4;
+  --bone-dim: rgba(237, 234, 228, 0.56);
+  --bone-faint: rgba(237, 234, 228, 0.28);
+
+  /* Градиенты */
+  --grad-sunset: linear-gradient(90deg, #920228 0%, #c21a2a 38%, #f66526 82%, #ff8a3d 100%);
+  --grad-glow: radial-gradient(60% 60% at 50% 45%, rgba(246, 101, 38, 0.55) 0%, rgba(146, 2, 40, 0.35) 45%, transparent 75%);
+
+  /* Типографика (fluid) */
+  --font-display: 'Archivo', 'Arial Narrow', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --t-mega: clamp(96px, 22vw, 420px);
+  --t-xl: clamp(64px, 12vw, 220px);
+  --t-lg: clamp(40px, 6vw, 104px);
+  --t-md: clamp(24px, 2.4vw, 40px);
+  --t-body: clamp(16px, 1.1vw, 19px);
+  --t-micro: 11px;
+  --t-nano: 9px;
+
+  /* Пространство */
+  --gutter-x: 16px;
+  --col-gap: 12px;
+  --space-section: clamp(120px, 16vw, 256px);
+  --space-block: clamp(48px, 6vw, 96px);
+  --space-tight: clamp(16px, 2vw, 24px);
+
+  /* Движение */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-inout: cubic-bezier(0.76, 0, 0.24, 1);
+  --dur-xs: 180ms;
+  --dur-s: 320ms;
+  --dur-m: 600ms;
+  --dur-l: 1100ms;
+  --dur-xl: 1800ms;
+
+  /* shadcn-токены компонентов 21st → наши */
+  --background: var(--ink);
+  --foreground: var(--bone);
+  --card: var(--ink-2);
+  --card-foreground: var(--bone);
+  --popover: var(--ink-2);
+  --popover-foreground: var(--bone);
+  --primary: var(--ember);
+  --primary-foreground: var(--ink);
+  --secondary: var(--ink-3);
+  --secondary-foreground: var(--bone);
+  --muted: var(--ink-3);
+  --muted-foreground: var(--bone-dim);
+  --accent: var(--ink-3);
+  --accent-foreground: var(--bone);
+  --destructive: var(--red);
+  --destructive-foreground: var(--bone);
+  --border: var(--line);
+  --input: var(--line);
+  --ring: var(--ember);
+  --radius: 20px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter-x: clamp(20px, 3.2vw, 56px);
+    --col-gap: 20px;
+  }
+}
+@media (min-width: 1280px) {
+  :root {
+    --col-gap: 24px;
+  }
+}

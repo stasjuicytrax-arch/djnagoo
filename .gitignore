@@ -3,3 +3,5 @@ node_modules/
 dist/
 .next/
 out/
+.impeccable/config.local.json
+.impeccable/hook.cache.json
