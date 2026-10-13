@@ -230,25 +230,24 @@ body {
   }
 }
 
-/* 03 · Stats: цвет цифр по положению на градиенте --grad-sunset (bone ≥3:1 до ~50%, ink ≥3:1 после) */
-.stat {
-  color: var(--bone);
+/* 03 · Stats: живой фон crimson → ember (ember смешан с ink: bone-текст держит ≥4.5:1), Archivo wdth 62 / wght 800 */
+.stats-bg {
+  background-image: linear-gradient(
+    90deg,
+    var(--crimson) 0%,
+    color-mix(in srgb, var(--red) 80%, var(--ink)) 30%,
+    color-mix(in srgb, var(--ember) 62%, var(--ink)) 62%,
+    color-mix(in srgb, var(--ember-hot) 58%, var(--ink)) 100%
+  );
+  background-size: 260% 100%;
+  background-position: 0% 50%;
 }
-@media (max-width: 767px) {
-  /* 2 колонки, первая цифра на всю ширину: справа — нечётные, кроме первой */
-  .stat:nth-child(odd):not(:first-child) {
-    color: var(--ink);
-  }
-}
-@media (min-width: 768px) and (max-width: 1279px) {
-  .stat:nth-child(3n) {
-    color: var(--ink);
-  }
-}
-@media (min-width: 1280px) {
-  .stat:nth-child(n + 3) {
-    color: var(--ink);
-  }
+.stat-num {
+  font-family: var(--font-display);
+  font-stretch: 62%;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
 }
 
 /* 04 · Sound: пилюля жанра. Hover: заливка ember, текст ink (6.4:1) */

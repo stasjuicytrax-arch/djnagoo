@@ -3,7 +3,6 @@ import QRCode from 'qrcode'
 import { content, assetUrl, type TourItem } from '@/lib/content'
 import { fmtDate, groupOf } from '@/lib/format'
 import Logo from '@/components/Logo'
-import BarNumber from '@/components/BarNumber'
 
 const { artist, manifest, bio, stats, genres, videos, timeline, tour, press, contacts, hero, ui, site } = content
 
@@ -150,20 +149,20 @@ export default function Print() {
       </Slide>
 
       {/* 3 · Stats */}
-      <Slide id="stats" className="!text-ink" style={{ backgroundImage: 'var(--grad-sunset)' }}>
-        <ul className="absolute inset-x-[56px] bottom-[160px] m-0 grid list-none grid-cols-6 gap-6 p-0">
-          {stats.map((s, i) => {
+      <Slide
+        id="stats"
+        style={{
+          backgroundImage:
+            'linear-gradient(90deg, var(--crimson), color-mix(in srgb, var(--red) 80%, var(--ink)) 40%, color-mix(in srgb, var(--ember) 62%, var(--ink)))',
+        }}
+      >
+        <ul className="absolute inset-x-[56px] bottom-[170px] m-0 grid list-none grid-cols-4 gap-8 p-0">
+          {stats.map((s) => {
             const n = s.format === 'yearsSince' ? years : s.value
             return (
-              <li
-                key={s.label}
-                className={`border-t border-current/55 pt-5 ${i === 0 ? 'col-span-2 text-bone' : i < 2 ? 'text-bone' : 'text-ink'}`}
-              >
-                <BarNumber value={String(n)} label={String(n)} cell={i === 0 ? '38px' : '16px'} />
-                <p className="t-micro m-0 mt-5 inline-flex items-center gap-2 rounded-full bg-ink px-3 py-1.5 !text-bone">
-                  <span className="inline-block size-2 bg-ember" />
-                  {s.label}
-                </p>
+              <li key={s.label} className="border-t border-bone/50 pt-6">
+                <span className="stat-num block" style={{ fontSize: '300px', lineHeight: 0.95 }}>{n}</span>
+                <span className="t-micro mt-4 block">{s.label}</span>
               </li>
             )
           })}

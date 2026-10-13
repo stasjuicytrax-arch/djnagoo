@@ -35,7 +35,7 @@ function readCorners(): Corners {
     tr: top === 'manifest',
     bl: bottom === 'manifest',
     // справа под счётчиком у Stats горячий ember (bone на нём 2.6:1)
-    br: bottom === 'manifest' || bottom === 'stats' || (bottom === 'hero' && heroRight),
+    br: bottom === 'manifest' || (bottom === 'hero' && heroRight),
   }
 }
 
