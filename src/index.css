@@ -176,7 +176,8 @@ body {
   }
   .hero-wordmark {
     top: auto;
-    bottom: 11%;
+    /* 24px воздуха над нижней рамкой (счётчик + прогресс ≈ 60px) */
+    bottom: calc(96px + env(safe-area-inset-bottom));
   }
 }
 /* вход: wdth 62 → 125 (font-stretch), фото 1.08 → 1 */

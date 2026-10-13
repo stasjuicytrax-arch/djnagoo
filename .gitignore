@@ -5,3 +5,8 @@ dist/
 out/
 .impeccable/config.local.json
 .impeccable/hook.cache.json
+.claude/skills/
+.agents/
+.codex/
+.gemini/
+skills-lock.json

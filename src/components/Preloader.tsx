@@ -46,23 +46,16 @@ function preloadImage(src: string) {
 export default function Preloader({ onDone }: { onDone: () => void }) {
   const [pct, setPct] = useState(0)
   const [open, setOpen] = useState(false)
-  const [armed, setArmed] = useState(false)
   const real = useRef(0)
   const calm = useMemo(() => reducedMotion(), [])
   const mobile = useMemo(() => window.matchMedia('(max-width: 767px)').matches, [])
-
-  // Бары собираются со следующего кадра, а не стоят готовыми
-  useEffect(() => {
-    const r = requestAnimationFrame(() => setArmed(true))
-    return () => cancelAnimationFrame(r)
-  }, [])
 
   // 1. Реальная загрузка
   useEffect(() => {
     const jobs: Promise<unknown>[] = [
       document.fonts.load("900 1em 'Archivo'"),
       document.fonts.load("500 1em 'JetBrains Mono'"),
-      preloadImage(assetUrl(mobile ? content.hero.vertical : content.hero.main)),
+      preloadImage(assetUrl(mobile ? content.hero.vertical : content.hero.plate)),
     ]
     if (!mobile && content.hero.cutout) jobs.push(preloadImage(assetUrl(content.hero.cutout)))
     let done = 0
@@ -169,6 +162,15 @@ export default function Preloader({ onDone }: { onDone: () => void }) {
         ))}
       </div>
 
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="t-micro link-draw absolute bottom-5 right-[var(--gutter-x)] z-10 px-2 py-3 text-bone-dim hover:text-bone"
+        style={{ opacity: open ? 0 : 1 }}
+      >
+        {content.ui.skip}
+      </button>
+
       {/* счётчик из баров */}
       <div
         className="absolute inset-0 grid place-items-center text-bone"
@@ -179,18 +181,12 @@ export default function Preloader({ onDone }: { onDone: () => void }) {
       >
         <div className="flex flex-col gap-4">
           <BarNumber
-            value={String(pct).padStart(3, '0')}
+            value={String(pct).padStart(2, '0')}
             cell="clamp(10px, 3.2vw, 40px)"
             ms={320}
             stagger={8}
-            active={armed}
           />
-          <p className="t-micro flex justify-between text-bone-dim">
-            <span>{content.ui.loading}</span>
-            <span aria-hidden>
-              <span className="text-ember">.</span>
-            </span>
-          </p>
+          <p className="t-micro text-bone-dim">{content.ui.loading}</p>
         </div>
       </div>
     </div>

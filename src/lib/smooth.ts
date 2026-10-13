@@ -5,6 +5,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
+// Всегда стартуем сверху: восстановленный браузером скролл рассинхронизирует прелоадер и триггеры
+if (typeof window !== 'undefined' && 'scrollRestoration' in history) history.scrollRestoration = 'manual'
+
 export const reducedMotion = () =>
   typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 

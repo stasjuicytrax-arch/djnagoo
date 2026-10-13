@@ -33,6 +33,7 @@
     "sections": ["hero", "manifest", "stats", "sound", "video", "timeline", "tour", "gallery", "booking"],
     "live": "Live from",
     "loading": "Loading",
+    "skip": "Skip",
     "floatingCta": "Book Nagoo",
     "scroll": "Scroll",
     "cursor": { "play": "Sound on", "view": "View", "drag": "Drag" },
@@ -122,6 +123,8 @@
 
   "hero": {
     "main": "assets/hero/hero-main.webp",
+    "plate": "assets/hero/hero-plate.webp",
+    "_plateNote": "Фон hero без артиста (артист вырезан и закрашен градиентом): позволяет масштабировать и двигать cutout независимо от фона.",
     "alt": "assets/hero/hero-alt.webp",
     "vertical": "assets/hero/hero-vertical-clean.webp",
     "_verticalNote": "Чистый 9:16 кроп из Hero 2.jpg. Старый hero-vertical.webp (из nagoo.jpg) содержит запечённый вордмарк, фиолетовую плёнку и чёрный объект сверху справа.",

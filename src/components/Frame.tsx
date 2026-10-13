@@ -31,7 +31,8 @@ function readCorners(): Corners {
   const heroRight = desktop && window.scrollY < vh * 0.45
   return {
     tl: top === 'manifest',
-    tr: top === 'manifest' || (top === 'hero' && heroRight),
+    // меню стоит на тёмном стекле: ink только на светлом Manifest, где стекло bone
+    tr: top === 'manifest',
     bl: bottom === 'manifest',
     br: bottom === 'manifest' || (bottom === 'hero' && heroRight),
   }
@@ -113,7 +114,7 @@ export default function Frame() {
                 onClick={go(n.id)}
                 className={
                   last
-                    ? 'link-draw relative py-1 before:absolute before:-inset-x-3 before:-inset-y-3 before:content-[""] max-md:inline-flex max-md:h-11 max-md:items-center max-md:rounded-full max-md:bg-ember max-md:px-5 max-md:text-ink'
+                    ? 'relative inline-flex items-center rounded-full bg-ember px-4 py-1.5 text-ink transition-colors hover:bg-ember-hot before:absolute before:-inset-x-2 before:-inset-y-3 before:content-[""] max-md:h-11 max-md:px-5'
                     : 'link-draw relative hidden py-1 before:absolute before:-inset-x-3 before:-inset-y-3 before:content-[""] md:inline-block'
                 }
               >
