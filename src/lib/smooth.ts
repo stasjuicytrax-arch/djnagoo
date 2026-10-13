@@ -34,6 +34,13 @@ export function useSmoothScroll() {
 
 /** Скролл к якорю: через Lenis, если он есть. */
 export function scrollToId(id: string) {
+  // блоки ниже подгружаются лениво: просим все сразу и доводим скролл, когда высота устоится
+  window.dispatchEvent(new Event('nagoo:load-all'))
+  window.setTimeout(() => go(id), 500)
+  go(id)
+}
+
+function go(id: string) {
   const el = document.getElementById(id)
   if (!el) return
   if (lenis) lenis.scrollTo(el, { duration: 1.4, easing: (t) => 1 - Math.pow(1 - t, 4) })

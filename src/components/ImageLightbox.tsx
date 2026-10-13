@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react'
 import { content } from '@/lib/content'
+import { getLenis } from '@/lib/smooth'
 
 const L = content.ui.lightbox
 
@@ -24,7 +25,7 @@ function Btn(props: React.ButtonHTMLAttributes<HTMLButtonElement> & { label: str
       aria-label={label}
       title={label}
       {...rest}
-      className={`grid size-11 place-items-center rounded-full bg-ink/60 text-bone backdrop-blur-[14px] transition-colors hover:bg-ember hover:text-ink ${className}`}
+      className={`grid size-11 place-items-center rounded-full bg-ink/80 text-bone transition-colors hover:bg-ember hover:text-ink ${className}`}
     >
       {children}
     </button>
@@ -55,6 +56,9 @@ export default function ImageLightbox({
     if (!d) return
     if (open && !d.open) d.showModal()
     if (!open && d.open) d.close()
+    // страница под модалкой не должна листаться колесом
+    if (open) getLenis()?.stop()
+    return () => getLenis()?.start()
   }, [open])
 
   const go = useCallback(

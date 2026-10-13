@@ -32,9 +32,7 @@ function StageCard({ s, i }: { s: Stage; i: number }) {
       <div className={up ? 'md:row-start-1 md:self-end md:pb-8' : 'md:row-start-2 md:self-start md:pt-8'}>
         <p className="t-micro m-0 text-bone-dim">{range(s)}</p>
         <p
-          className={`m-0 mt-2 uppercase [font-stretch:62%] [font-weight:800] ${
-            award ? 't-lg text-ember' : 't-md'
-          }`}
+          className={`m-0 mt-2 ${award ? 't-lg uppercase text-ember' : 't-md-cond'}`}
         >
           {s.title}
         </p>

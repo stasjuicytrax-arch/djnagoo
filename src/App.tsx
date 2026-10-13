@@ -1,5 +1,4 @@
-import { useCallback, useState } from 'react'
-import { content } from '@/lib/content'
+import { useCallback, useEffect, useState } from 'react'
 import { useSmoothScroll } from '@/lib/smooth'
 import { markIntroDone, shouldPreload } from '@/lib/intro'
 import Frame from '@/components/Frame'
@@ -10,10 +9,14 @@ import Preloader from '@/components/Preloader'
 import Hero from '@/blocks/Hero'
 import Manifest from '@/blocks/Manifest'
 import Stats from '@/blocks/Stats'
-import Sound from '@/blocks/Sound'
-import Video from '@/blocks/Video'
-import Timeline from '@/blocks/Timeline'
-import Tour from '@/blocks/Tour'
+import Lazy from '@/components/Lazy'
+
+const loadSound = () => import('@/blocks/Sound')
+const loadVideo = () => import('@/blocks/Video')
+const loadTimeline = () => import('@/blocks/Timeline')
+const loadTour = () => import('@/blocks/Tour')
+const loadGallery = () => import('@/blocks/Gallery')
+const loadBooking = () => import('@/blocks/Booking')
 
 export default function App() {
   useSmoothScroll()
@@ -23,6 +26,16 @@ export default function App() {
     return show
   })
   const onDone = useCallback(() => setLoading(false), [])
+
+  // в простое после первой отрисовки докачиваем чанки блоков, не блокируя главный поток
+  useEffect(() => {
+    const run = () => [loadSound, loadVideo, loadTimeline, loadTour, loadGallery, loadBooking].forEach((l) => void l())
+    const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number }
+    let t = 0
+    if (typeof w.requestIdleCallback === 'function') w.requestIdleCallback(run, { timeout: 4000 })
+    else t = window.setTimeout(run, 2500)
+    return () => window.clearTimeout(t)
+  }, [])
 
   return (
     <>
@@ -35,20 +48,12 @@ export default function App() {
         <Hero />
         <Manifest />
         <Stats />
-        <Sound />
-        <Video />
-        <Timeline />
-        <Tour />
-        {/* Временные заглушки: заменяются блоками 08–09 по порядку TZ §4 */}
-        {content.ui.sections.slice(7).map((id) => (
-          <section
-            key={id}
-            id={id}
-            className={`grid min-h-svh place-items-center ${id === 'manifest' ? 'bg-bone text-ink' : ''}`}
-          >
-            <span className="t-lg">{id}</span>
-          </section>
-        ))}
+        <Lazy id="sound" load={loadSound} minHeight="100svh" />
+        <Lazy id="video" load={loadVideo} minHeight="100svh" />
+        <Lazy id="timeline" load={loadTimeline} minHeight="100svh" />
+        <Lazy id="tour" load={loadTour} minHeight="100svh" />
+        <Lazy id="gallery" load={loadGallery} minHeight="100svh" />
+        <Lazy id="booking" load={loadBooking} minHeight="100svh" />
       </main>
     </>
   )

@@ -26,7 +26,7 @@ const KEY = 'nagoo:preloaded'
 export function shouldPreload(): boolean {
   try {
     const q = new URLSearchParams(window.location.search).get('preload')
-    if (q === '0') return false
+    if (q === '0' || new URLSearchParams(window.location.search).has('eager')) return false
     if (q === '1') return true
     return sessionStorage.getItem(KEY) !== '1'
   } catch {

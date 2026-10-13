@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { content, assetUrl } from '@/lib/content'
-import { gsap, reducedMotion } from '@/lib/smooth'
+import { getLenis, gsap, reducedMotion } from '@/lib/smooth'
 import SectionTitle from '@/components/SectionTitle'
 import { noiseUrl } from '@/components/Grain'
 
@@ -214,6 +214,8 @@ function Lightbox({ v, onClose }: { v: V | null; onClose: () => void }) {
       void vid.current?.play().catch(() => undefined)
     }
     if (!v && d.open) d.close()
+    if (v) getLenis()?.stop()
+    return () => getLenis()?.start()
   }, [v])
 
   return (
