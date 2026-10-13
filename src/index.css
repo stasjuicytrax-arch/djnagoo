@@ -172,12 +172,13 @@ body {
 }
 @media (max-width: 767px) {
   .hero {
-    --wm-size: 15.4vw;
+    --wm-size: calc((100vw - 32px) / 6.4); /* на всю ширину с полями 16px */
   }
   .hero-wordmark {
-    top: auto;
-    /* 24px воздуха над нижней рамкой (счётчик + прогресс ≈ 60px) */
-    bottom: calc(96px + env(safe-area-inset-bottom));
+    /* верхняя треть кадра: над головой чистый градиент */
+    top: calc(64px + env(safe-area-inset-top));
+    bottom: auto;
+    padding-inline: 16px;
   }
 }
 /* вход: wdth 62 → 125 (font-stretch), фото 1.08 → 1 */

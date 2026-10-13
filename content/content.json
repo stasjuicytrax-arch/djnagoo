@@ -173,8 +173,11 @@
     "plate": "assets/hero/hero-plate.webp",
     "_plateNote": "Фон hero без артиста (артист вырезан и закрашен градиентом): позволяет масштабировать и двигать cutout независимо от фона.",
     "alt": "assets/hero/hero-alt.webp",
-    "vertical": "assets/hero/hero-vertical-clean.webp",
-    "_verticalNote": "Чистый 9:16 кроп из Hero 2.jpg. Старый hero-vertical.webp (из nagoo.jpg) содержит запечённый вордмарк, фиолетовую плёнку и чёрный объект сверху справа.",
+    "mobile": {
+      "src720": "assets/hero/hero-mobile-720.webp",
+      "src1080": "assets/hero/hero-mobile.webp",
+      "_note": "Фото 9:16 для <768px: градиент над головой свободен под вордмарк, низ кадра свободен. 720 для обычных экранов, 1080 для DPR ≥ 2."
+    },
     "cutout": "assets/hero/hero-main-cutout.webp",
     "description": "DJ Nagoo laughing in black sunglasses and a black polo, hand resting on his chin"
   },

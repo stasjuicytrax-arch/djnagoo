@@ -140,7 +140,9 @@ export default function Hero() {
           >
             <source media={DESKTOP} srcSet={assetUrl(hero.plate)} />
             <img
-              src={assetUrl(hero.vertical)}
+              src={assetUrl(hero.mobile.src720)}
+              srcSet={`${assetUrl(hero.mobile.src720)} 720w, ${assetUrl(hero.mobile.src1080)} 1080w`}
+              sizes="100vw"
               alt=""
               {...{ fetchpriority: 'high' }}
               decoding="async"
@@ -188,7 +190,7 @@ export default function Hero() {
         {/* микро-лейблы */}
         <div className="t-micro pointer-events-none absolute inset-0 z-[4] px-[var(--gutter-x)] text-bone">
           <div ref={side} className="absolute inset-0">
-            <ul className="absolute right-[var(--gutter-x)] top-[84px] m-0 list-none p-0 text-right leading-[1.7] text-ink md:left-[var(--gutter-x)] md:right-auto md:top-[38%] md:text-left md:text-bone">
+            <ul className="absolute left-[16px] top-[calc(64px+var(--wm-size)*0.82+14px)] m-0 list-none p-0 text-left leading-[1.7] text-ink md:left-[var(--gutter-x)] md:top-[38%] md:text-bone">
               <li>{artist.role}</li>
               <li>Since {artist.since}</li>
               <li>{artist.base}</li>

@@ -55,7 +55,7 @@ export default function Preloader({ onDone }: { onDone: () => void }) {
     const jobs: Promise<unknown>[] = [
       document.fonts.load("900 1em 'Archivo'"),
       document.fonts.load("500 1em 'JetBrains Mono'"),
-      preloadImage(assetUrl(mobile ? content.hero.vertical : content.hero.plate)),
+      preloadImage(assetUrl(mobile ? content.hero.mobile.src720 : content.hero.plate)),
     ]
     if (!mobile && content.hero.cutout) jobs.push(preloadImage(assetUrl(content.hero.cutout)))
     let done = 0
