@@ -210,3 +210,35 @@ body {
 .hero[data-intro='out'] .hero-cutout img {
   opacity: 0;
 }
+
+/* 02 · Manifest: --t-xl, но не шире 8 колонок. Самая длинная строка = 6.62em при wdth 62 / wght 800,
+   8 колонок ≈ 62vw → 9.2vw. На mobile 4 колонки: 12.5vw. */
+.m-title-size {
+  font-size: clamp(44px, 12.5vw, 60px);
+}
+@media (min-width: 768px) {
+  .m-title-size {
+    font-size: min(var(--t-xl), 9.2vw);
+  }
+}
+
+/* 03 · Stats: цвет цифр по положению на градиенте --grad-sunset (bone ≥3:1 до ~50%, ink ≥3:1 после) */
+.stat {
+  color: var(--bone);
+}
+@media (max-width: 767px) {
+  /* 2 колонки, первая цифра на всю ширину: справа — нечётные, кроме первой */
+  .stat:nth-child(odd):not(:first-child) {
+    color: var(--ink);
+  }
+}
+@media (min-width: 768px) and (max-width: 1279px) {
+  .stat:nth-child(3n) {
+    color: var(--ink);
+  }
+}
+@media (min-width: 1280px) {
+  .stat:nth-child(n + 3) {
+    color: var(--ink);
+  }
+}

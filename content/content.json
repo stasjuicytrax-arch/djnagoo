@@ -12,12 +12,18 @@
     "base": "Bahrain",
     "baseNote": "С ноября 2024 — резидент The Foundry, Bahrain (из старого промокита)",
     "label": "GATE13",
+    "platforms": {
+      "_note": "Ссылки на стриминги. Пока null: строку «Music on all digital platforms» не показываем, вернём, когда артист пришлёт ссылки.",
+      "spotify": null,
+      "appleMusic": null,
+      "beatport": null,
+      "youtubeMusic": null
+    },
     "labelNote": "Partner of GATE13; SoundCloud: GATE13",
     "highlights": [
       "DJ since 2005",
       "Best DJ Saint Petersburg, Russia — 2018",
-      "Partner of GATE13",
-      "Music on all digital platforms"
+      "Partner of GATE13"
     ]
   },
 
@@ -49,7 +55,7 @@
   "bio": {
     "_source": "Старый PromoKit (1.jpg). Word-документ BIO и пресс-релиз в рабочей папке НЕ найдены — при их появлении заменить/дополнить этот блок.",
     "needsConfirm": true,
-    "short": "DJ & producer behind the decks since 2005. From freelance sets at Ministry of Sound, Hed Kandi and Buddha Bar to residencies in Egypt, Russia and Bahrain. Best DJ of Saint Petersburg 2018. Partner of GATE13.",
+    "short": "DJ & producer behind the decks since 2005. From freelance sets at Ministry of Sound, Hed Kandi and Buddha Bar to residencies in Egypt, Russia and Bahrain.",
     "long": null
   },
 
@@ -76,9 +82,9 @@
   ],
 
   "stats": [
-    { "value": 2005, "label": "behind the decks since", "format": "year" },
+    { "value": 2005, "label": "years behind the decks", "format": "yearsSince" },
     { "value": 5, "label": "residencies", "suffix": "" },
-    { "value": 16, "label": "gigs in this archive", "suffix": "" },
+    { "value": 16, "label": "gigs documented", "suffix": "" },
     { "value": 5, "label": "cities · 4 countries", "suffix": "" },
     { "value": 8, "label": "genres in the set", "suffix": "" }
   ],

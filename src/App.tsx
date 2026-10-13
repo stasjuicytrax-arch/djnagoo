@@ -9,6 +9,7 @@ import FloatingCta from '@/components/FloatingCta'
 import Preloader from '@/components/Preloader'
 import Hero from '@/blocks/Hero'
 import Manifest from '@/blocks/Manifest'
+import Stats from '@/blocks/Stats'
 
 export default function App() {
   useSmoothScroll()
@@ -29,8 +30,9 @@ export default function App() {
       <main>
         <Hero />
         <Manifest />
-        {/* Временные заглушки: заменяются блоками 03–09 по порядку TZ §4 */}
-        {content.ui.sections.slice(2).map((id) => (
+        <Stats />
+        {/* Временные заглушки: заменяются блоками 04–09 по порядку TZ §4 */}
+        {content.ui.sections.slice(3).map((id) => (
           <section
             key={id}
             id={id}

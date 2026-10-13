@@ -38,11 +38,17 @@ export default function Cursor() {
       const t = (e.target as Element | null)?.closest?.('[data-cursor]') as HTMLElement | null
       setKind((t?.dataset.cursor as Kind | undefined) ?? null)
     }
+    const leave = () => {
+      x = y = -100
+      setKind(null)
+    }
     window.addEventListener('pointermove', move, { passive: true })
+    document.documentElement.addEventListener('mouseleave', leave)
     raf = requestAnimationFrame(loop)
     return () => {
       document.documentElement.classList.remove('has-cursor')
       window.removeEventListener('pointermove', move)
+      document.documentElement.removeEventListener('mouseleave', leave)
       cancelAnimationFrame(raf)
     }
   }, [enabled])

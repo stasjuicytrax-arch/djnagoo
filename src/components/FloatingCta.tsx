@@ -5,6 +5,7 @@ import { scrollToId } from '@/lib/smooth'
 /** Плавающая CTA: круг 72px ember, появляется после Hero, ведёт к Booking (TZ §4). */
 export default function FloatingCta() {
   const [show, setShow] = useState(false)
+  const [covered, setCovered] = useState(false)
   const btn = useRef<HTMLAnchorElement>(null)
 
   useEffect(() => {
@@ -32,6 +33,34 @@ export default function FloatingCta() {
     }
   }, [])
 
+  // Кружок прячется, пока под ним текст или горячий фон: любой [data-avoid-cta] в зоне кнопки
+  useEffect(() => {
+    let raf = 0
+    const check = () => {
+      const b = btn.current?.getBoundingClientRect()
+      if (!b) return
+      const pad = 20
+      const hit = [...document.querySelectorAll('[data-avoid-cta]')].some((n) => {
+        const r = n.getBoundingClientRect()
+        return r.bottom > b.top - pad && r.top < b.bottom + pad && r.right > b.left - pad && r.left < b.right + pad
+      })
+      setCovered((p) => (p === hit ? p : hit))
+    }
+    const onScroll = () => {
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(check)
+    }
+    check()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [])
+  const visible = show && !covered
+
   // Магнитное притяжение ±12px (desktop)
   const onMove = (e: React.PointerEvent<HTMLAnchorElement>) => {
     if (e.pointerType !== 'mouse' || !btn.current) return
@@ -54,13 +83,13 @@ export default function FloatingCta() {
       }}
       onPointerMove={onMove}
       onPointerLeave={onLeave}
-      tabIndex={show ? 0 : -1}
-      aria-hidden={!show}
+      tabIndex={visible ? 0 : -1}
+      aria-hidden={!visible}
       className="t-micro fixed bottom-[calc(64px+env(safe-area-inset-bottom))] right-[var(--gutter-x)] z-40 grid size-[72px] place-items-center rounded-full bg-ember text-center leading-tight text-ink hover:bg-ember-hot cta-circle"
       style={{
-        opacity: show ? 1 : 0,
-        scale: show ? '1' : '0.6',
-        pointerEvents: show ? 'auto' : 'none',
+        opacity: visible ? 1 : 0,
+        scale: visible ? '1' : '0.6',
+        pointerEvents: visible ? 'auto' : 'none',
         transition:
           'opacity var(--dur-s) var(--ease-out), scale var(--dur-m) var(--ease-out), translate var(--dur-s) var(--ease-out), background-color var(--dur-xs)',
       }}

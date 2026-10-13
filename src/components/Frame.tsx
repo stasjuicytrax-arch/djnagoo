@@ -34,7 +34,8 @@ function readCorners(): Corners {
     // меню стоит на тёмном стекле: ink только на светлом Manifest, где стекло bone
     tr: top === 'manifest',
     bl: bottom === 'manifest',
-    br: bottom === 'manifest' || (bottom === 'hero' && heroRight),
+    // справа под счётчиком у Stats горячий ember (bone на нём 2.6:1)
+    br: bottom === 'manifest' || bottom === 'stats' || (bottom === 'hero' && heroRight),
   }
 }
 

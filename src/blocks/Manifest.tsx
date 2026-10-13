@@ -79,8 +79,7 @@ export default function Manifest() {
       >
         {/* заголовок: с 5-й колонки (desktop) */}
         <h2
-          className="m-title t-lg col-span-4 md:col-span-6 md:col-start-3 xl:col-span-8 xl:col-start-5"
-          style={{ fontSize: 'clamp(44px, 12.5vw, 104px)' }}
+          className="m-title t-xl m-title-size col-span-4 md:col-span-6 md:col-start-3 xl:col-span-8 xl:col-start-5"
         >
           {lines.map((line, i) => (
             <span key={line} className="block [clip-path:inset(0_-50vw)]">
@@ -118,7 +117,7 @@ export default function Manifest() {
             />
           </div>
 
-          <div className="col-span-4 flex max-w-[60ch] flex-col gap-[var(--space-tight)] md:col-span-4 md:col-start-5 xl:col-span-4 xl:col-start-9">
+          <div data-avoid-cta className="col-span-4 flex max-w-[60ch] flex-col gap-[var(--space-tight)] md:col-span-4 md:col-start-5 xl:col-span-4 xl:col-start-9">
             <p className="t-body">{bio.short}</p>
             <ul className="t-micro m-0 list-none p-0">
               {artist.highlights.map((h) => (
