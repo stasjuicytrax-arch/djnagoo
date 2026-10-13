@@ -106,14 +106,14 @@
     "main": "assets/hero/hero-main.webp",
     "alt": "assets/hero/hero-alt.webp",
     "vertical": "assets/hero/hero-vertical.webp",
-    "cutout": null,
-    "_cutoutTodo": "Сделать PNG/WebP с альфой (артист без фона) из Hero 2.jpg — нужен для слоя «вордмарк ЗА головой»."
+    "cutout": "assets/hero/hero-main-cutout.webp"
   },
 
   "logo": {
     "black": "assets/logo/logo-black.png",
     "white": "assets/logo/logo-white.png",
-    "_todo": "Отрисовать SVG-версию логотипа (PNG 1115×149 мелковат для 4K-вордмарка и халфтон-футера)."
+    "svg": "assets/logo/logo.svg",
+    "svgNote": "Трассировка potrace из PNG 1115×149 (4× upscale), один path, цвет через currentColor. Заменить на векторный оригинал, если появится."
   },
 
   "contacts": {

@@ -182,8 +182,8 @@ git clone https://github.com/voltagent/awesome-design-md ~/awesome-design-md   #
 
 | # | Задача | Статус |
 |---|---|---|
-| TODO-1 | **Cutout артиста** из `Hero 2.jpg` (WebP с альфой, 2800px) для слоя «вордмарк за головой». Инструменты: rembg (`birefnet-portrait`), Photoshop «Select Subject» или Higgsfield remove_background | ❌ (в облаке не поставился rembg) |
-| TODO-2 | **SVG логотипа** DJNAGOO (сейчас PNG 1115×149). Нужен для 22vw-вордмарка, халфтона и прелоадера. Обвести вручную или `potrace` | ❌ |
+| TODO-1 |  **Cutout артиста** из `Hero 2.jpg` (WebP с альфой, 2800px) для слоя «вордмарк за головой». Инструменты: rembg (`birefnet-portrait`), Photoshop «Select Subject» или Higgsfield remove_background | ✅ `public/assets/hero/hero-main-cutout.webp` (2800×1563, альфа; @imgly/background-removal-node, модель medium) |
+| TODO-2 | **SVG логотипа** DJNAGOO (сейчас PNG 1115×149). Нужен для 22vw-вордмарка, халфтона и прелоадера. Обвести вручную или `potrace` | ✅ `public/assets/logo/logo.svg` (potrace, один path, currentColor) |
 | TODO-3 | Дуотон-версии пресс-фото (или CSS-фильтр на лету) | решить на верстке |
 | TODO-4 | Видео: перекодировать в H.264 + WebM, `-crf 28`, без звука копия для автоплея (меньше вес), звук — отдельная полная версия по клику | ❌ |
 | TODO-5 | OG-картинка 1200×630: Hero + вордмарк | ❌ |
