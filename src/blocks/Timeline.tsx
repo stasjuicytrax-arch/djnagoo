@@ -130,7 +130,7 @@ export default function Timeline() {
         }
       }
     }
-    const SEG = 10
+    const SEG = 6
     const TAIL_PX = 150
     const segs = tail.current ? [...tail.current.querySelectorAll('path')] : []
     let flashed = false
@@ -213,6 +213,7 @@ export default function Timeline() {
           <li aria-hidden className="pointer-events-none absolute left-0 top-0 hidden md:block">
           {/* линия: только desktop */}
           {path && (
+            <>
             <svg
               aria-hidden
                 width={path.w}
@@ -237,6 +238,9 @@ export default function Timeline() {
               {path.nodes.map((n, k) => (
               <circle key={k} cx={n.x} cy={path.h / 2} r={n.award ? 7 : 4} fill={n.award ? "var(--ember)" : "var(--bone-faint)"} />
             ))}
+            </svg>
+            {/* комета: отдельный слой поверх линии */}
+            <svg aria-hidden width={path.w} height={path.h} viewBox={`0 0 ${path.w} ${path.h}`} className="absolute left-0 top-0">
             {awardNode(path) && (
               <circle
                 ref={flash}
@@ -251,20 +255,21 @@ export default function Timeline() {
               />
             )}
             <g ref={tail} opacity="0">
-              {Array.from({ length: 10 }, (_, k) => (
+              {Array.from({ length: 6 }, (_, k) => (
                 <path
                   key={k}
                   fill="none"
                   stroke="var(--bone)"
                   strokeLinecap="round"
-                  strokeWidth={3.6 - k * 0.22}
-                  opacity={0.9 - k * 0.085}
+                  strokeWidth={3.8 - k * 0.5}
+                  opacity={0.9 - k * 0.15}
                 />
               ))}
             </g>
             <circle ref={glow} r="15" fill="url(#tl-comet)" cx="0" cy={path.h / 2} opacity="0" />
             <circle ref={head} r="4.5" fill="var(--bone)" cx="0" cy={path.h / 2} opacity="0" />
             </svg>
+            </>
           )}
           </li>
         </ul>
