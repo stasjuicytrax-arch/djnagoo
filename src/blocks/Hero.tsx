@@ -190,7 +190,7 @@ export default function Hero() {
         {/* микро-лейблы */}
         <div className="t-micro pointer-events-none absolute inset-0 z-[4] px-[var(--gutter-x)] text-bone">
           <div ref={side} className="absolute inset-0">
-            <ul className="absolute left-[16px] top-[calc(64px+var(--wm-size)*0.82+14px)] m-0 list-none p-0 text-left leading-[1.7] text-ink md:left-[var(--gutter-x)] md:top-[38%] md:text-bone">
+            <ul className="absolute left-[16px] top-[calc(var(--hero-top)+var(--wm-size)*0.82+14px)] m-0 list-none p-0 text-left leading-[1.7] text-ink md:left-[var(--gutter-x)] md:top-[38%] md:text-bone">
               <li>{artist.role}</li>
               <li>Since {artist.since}</li>
               <li>{artist.base}</li>

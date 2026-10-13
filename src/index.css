@@ -173,10 +173,12 @@ body {
 @media (max-width: 767px) {
   .hero {
     --wm-size: calc((100vw - 32px) / 6.4); /* на всю ширину с полями 16px */
+    /* блок «вордмарк + микротекст»: не ближе 32px к BOOK, центр над головой (≈22–30% экрана) */
+    --hero-top: max(calc(96px + env(safe-area-inset-top)), 16.5svh);
   }
   .hero-wordmark {
     /* верхняя треть кадра: над головой чистый градиент */
-    top: calc(64px + env(safe-area-inset-top));
+    top: var(--hero-top);
     bottom: auto;
     padding-inline: 16px;
   }

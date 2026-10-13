@@ -105,7 +105,9 @@ export default function Frame() {
           href="#hero"
           onClick={go('hero')}
           aria-label={`${artist.name}: back to top`}
-          className={`pointer-events-auto relative -my-4 block w-[88px] py-4 md:w-24 before:absolute before:-inset-x-3 before:inset-y-0 before:content-[''] ${tone} ${ink(c.tl)}`}
+          className={`pointer-events-auto relative -my-4 block w-[88px] py-4 transition-opacity duration-[var(--dur-s)] md:w-24 before:absolute before:-inset-x-3 before:inset-y-0 before:content-[''] ${tone} ${ink(c.tl)} ${
+            inHero ? 'max-md:pointer-events-none max-md:opacity-0' : ''
+          }`}
         >
           <Logo className="block w-full" />
         </a>
