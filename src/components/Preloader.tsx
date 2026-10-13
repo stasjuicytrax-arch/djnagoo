@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { content, assetUrl } from '@/lib/content'
 import { markIntroDone, rememberPreload } from '@/lib/intro'
 import { reducedMotion } from '@/lib/smooth'
-import BarNumber from '@/components/BarNumber'
+import DrumNumber from '@/components/DrumNumber'
 
 const STRIPS = 8
 const MIN_MS = 600 // счётчик не быстрее, иначе это мигание
@@ -171,7 +171,7 @@ export default function Preloader({ onDone }: { onDone: () => void }) {
         {content.ui.skip}
       </button>
 
-      {/* счётчик из баров */}
+      {/* счётчик-барабан: Archivo wdth 62 / wght 800 */}
       <div
         className="absolute inset-0 grid place-items-center text-bone"
         style={{
@@ -180,12 +180,7 @@ export default function Preloader({ onDone }: { onDone: () => void }) {
         }}
       >
         <div className="flex flex-col gap-4">
-          <BarNumber
-            value={String(pct).padStart(2, '0')}
-            cell="clamp(10px, 3.2vw, 40px)"
-            ms={320}
-            stagger={8}
-          />
+          <DrumNumber value={pct} className="text-[min(46svh,calc((100vw-32px)/1.3))]" />
           <p className="t-micro text-bone-dim">{content.ui.loading}</p>
         </div>
       </div>
